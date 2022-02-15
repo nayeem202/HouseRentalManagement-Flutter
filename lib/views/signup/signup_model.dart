@@ -47,11 +47,11 @@ class SignupModel{
 
   String toJson() {
     return '{' +
-        ' name: $name,' +
-        ' username: $username,' +
-        ' email: $email,' +
-        ' phone: $phone,' +
-        ' password: $password,' +
+        ' "name": "$name",' +
+        ' "username": "$username",' +
+        ' "email": "$email",' +
+        ' "phone": "$phone",' +
+        ' "password": "$password" ' +
         '}';
   }
 

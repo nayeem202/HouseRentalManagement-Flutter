@@ -33,15 +33,24 @@ class _SignupPageState extends State<SignupPage> {
   );
 
   save() async{
-    String name = _name.value.toString() ?? '';
-    String username = _username.value.toString() ?? '';
-    String email = _email.value.toString() ?? '';
-    String phone = _phone.value.toString() ?? '';
-    String password = _password.value.toString() ?? '';
+    String name = _name.value.text;
+    String username = _username.value.text;
+    String email = _email.value.text;
+    String phone = _phone.value.text;
+    String password = _password.value.text;
     var model = SignupModel(name: name, username: username, email: email, phone: phone, password: password);
     String _body = model.toJson();
     try{
       final response = await _http.postData('http://192.168.0.104:9092/saveUser', _body);
+      Fluttertoast.showToast(
+          msg: "Registration Successful",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
 
     }catch(e){
       log(e.toString());
@@ -138,7 +147,7 @@ class _SignupPageState extends State<SignupPage> {
                 style: raisedButtonStyle,
                 onPressed: () {
                   this.save();
-                  print(this._name);
+
                 },
                 child: Text('Submit'),
               ),

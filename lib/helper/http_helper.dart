@@ -52,7 +52,6 @@ class HttpHelper {
       case 412:
         return response;
       case 401:
-      //TokenHandler.refreshToken();
         Map<dynamic, dynamic> responseJson = json.decode(response.body);
         dynamic data = responseJson['message'];
         throw UnauthorisedException(data.join('\n'));
