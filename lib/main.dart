@@ -1,8 +1,10 @@
 import 'package:client_mobile/views/signup/signup_page.dart';
 import 'package:flutter/material.dart';
 
+import 'ep882_house_rental_app/house_rental_app.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(HouseRentalApp ());
 }
 
 class MyApp extends StatelessWidget {

@@ -36,6 +36,15 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.4
   fluttertoast: ^8.0.8
+  get: any
+  flutter_lorem: ^2.0.0
+  line_icons: ^2.0.1
+  google_fonts: any
+  date_picker_timeline: any
+  rpgnamegenerator: "1.0.2"
+  flutter_advanced_switch: ^2.1.0
+  freezed_annotation: any
+  provider: any
 
 dev_dependencies:
   flutter_test:

@@ -4,17 +4,20 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart';
 import 'http_exception.dart';
+// import 'http_exception.dart';
+// import 'http_exception.dart';
 
 class HttpHelper {
   Future<dynamic> getData(url) async {
     var responseJson;
     try {
-
+      //ToDo: add token
       var headers = {
         "Content-Type": "application/json",
-
+        'Authorization': 'Bearer '
       };
-      final response = await get(url, headers: headers);
+      var uri =Uri.parse(url);
+      final response = await get(uri, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
       print('No net');
@@ -25,10 +28,12 @@ class HttpHelper {
 
   Future<dynamic> postData(String _url, dynamic _body) async {
     var responseJson;
+    //ToDo: add token
     try {
       Uri url = Uri.parse(_url);
       var headers = {
         "Content-Type": "application/json",
+        'Authorization': 'Bearer '
       };
       final response = await post(url, headers: headers, body: _body);
       responseJson = _returnResponse(response);
@@ -52,6 +57,7 @@ class HttpHelper {
       case 412:
         return response;
       case 401:
+      //TokenHandler.refreshToken();
         Map<dynamic, dynamic> responseJson = json.decode(response.body);
         dynamic data = responseJson['message'];
         throw UnauthorisedException(data.join('\n'));
