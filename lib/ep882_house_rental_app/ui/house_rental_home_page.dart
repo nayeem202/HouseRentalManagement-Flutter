@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:client_mobile/ep882_house_rental_app/model/AdvertiseModel.dart';
+import 'package:http/http.dart' as http;
 import 'package:client_mobile/ep882_house_rental_app/model/house.dart';
 import 'package:client_mobile/helper/http_helper.dart';
 import 'package:flutter/material.dart';
@@ -24,19 +25,42 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
   );
 
 
-  getAdvertising() async{
-    final res = await _http.getData("http://192.168.0.104:9092/getAddvertising");
-    if(res.statusCode == 200){
-     Map<dynamic, dynamic>  data = json.decode(res.body);
-     // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-     List<dynamic> dataList= data['data'];
-     this.advertise = dataList.map((e) => AdvertiseModel.fromMap(e)).toList();
-     setState(() {
-       this.advertise;
-     });
-    }
 
+  // getAdvertising() async{
+  //   final res = await _http.getData("http://192.168.1.92:9092/getAddvertising");
+  //   if(res.statusCode == 200){
+  //    Map<dynamic, dynamic>  data = json.decode(res.body)[0];
+  //    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //     List<dynamic> dataList= data['data'];
+  //     this.advertise = dataList.map((e) => AdvertiseModel.fromMap(e)).toList();
+  //     setState(() {
+  //       this.advertise;
+  //     });
+  //   }
+  // }
+
+
+  Future<AdvertiseModel> getAdvertising() async {
+    final response = await http
+        .get(Uri.parse('http://192.168.1.92:9092/getAddvertising'));
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+
+
+      return AdvertiseModel.fromMap(jsonDecode(response.body)[0]);
+
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load album');
+    }
   }
+
+
+
+
 
 
 
@@ -45,7 +69,8 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
   void initState() {
     // TODO: implement initState
 
-      //super.initState();
+      super.initState();
+      //fetchAlbum();
      _tabController = TabController(length: 3, vsync: this);
      getAdvertising();
   }
@@ -113,7 +138,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                     ],
                   ),
                 ),
-                flex: 2,
+                flex: 3,
               ),
               TabBar(
                 isScrollable: true,

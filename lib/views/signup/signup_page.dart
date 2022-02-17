@@ -41,7 +41,7 @@ class _SignupPageState extends State<SignupPage> {
     var model = SignupModel(name: name, username: username, email: email, phone: phone, password: password);
     String _body = model.toJson();
     try{
-      final response = await _http.postData('http://192.168.0.104:9092/saveUser', _body);
+      final response = await _http.postData('http://192.168.1.92:9092/saveUser', _body);
       Fluttertoast.showToast(
           msg: "Registration Successful",
           toastLength: Toast.LENGTH_LONG,
