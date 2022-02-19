@@ -48,7 +48,7 @@ class HouseFilterPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       child: Row(
                         children: [
-                          const Text("Price Nightly"),
+                          const Text("Price Monthly"),
                           const Spacer(),
                           Consumer<HouseFilterProvider>(
                             builder: (context, value, child) {
@@ -103,7 +103,7 @@ class HouseFilterPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("Rooms"),
+                          const Text("Bed Rooms"),
                           const SizedBox(
                             height: 16,
                           ),
@@ -209,7 +209,7 @@ class HouseFilterPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       child: Row(
                         children: [
-                          const Text("Area"),
+                          const Text("Sqft"),
                           const Spacer(),
                           Consumer<HouseFilterAreaProvider>(
                             builder: (context, value, child) {

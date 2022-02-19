@@ -1,10 +1,11 @@
+import 'package:client_mobile/views/login/login_page.dart';
 import 'package:client_mobile/views/signup/signup_page.dart';
 import 'package:flutter/material.dart';
 
 import 'ep882_house_rental_app/house_rental_app.dart';
 
 void main() {
-  runApp(HouseRentalApp ());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -110,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.of(context).push(MaterialPageRoute(builder: (context)=> SignupPage()));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LoginPage()));
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
