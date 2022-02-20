@@ -1,3 +1,4 @@
+import 'package:client_mobile/views/bottomNavigationBar/bottomNavigation.dart';
 import 'package:client_mobile/views/login/login_page.dart';
 import 'package:client_mobile/views/signup/signup_page.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'ep882_house_rental_app/house_rental_app.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(HouseRentalApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -115,7 +117,8 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+      //bottomNavigationBar: BottomNavigation(),
     );
   }
 }
