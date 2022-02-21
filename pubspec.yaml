@@ -45,6 +45,7 @@ dependencies:
   flutter_advanced_switch: ^2.1.0
   freezed_annotation: any
   provider: any
+  water_drop_nav_bar:
 
 dev_dependencies:
   flutter_test:

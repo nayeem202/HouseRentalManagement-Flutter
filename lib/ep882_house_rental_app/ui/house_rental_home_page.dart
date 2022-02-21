@@ -1,8 +1,7 @@
 import 'dart:convert';
 
+import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 import 'package:client_mobile/ep882_house_rental_app/model/AdvertiseModel.dart';
-import 'package:client_mobile/views/bottomNavigationBar/bottomNavigation.dart';
-import 'package:http/http.dart' as http;
 import 'package:client_mobile/ep882_house_rental_app/model/house.dart';
 import 'package:client_mobile/helper/http_helper.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +25,21 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
   );
 
 
+  getAdvertising() async {
+    final res = await _http.getData("http://192.168.0.105:9092/getAddvertising");
+    if(res.statusCode == 200){
+      List<dynamic> data = json.decode(res.body);
+      this.advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
+      //this.advertise = data.map((e) => AdvertiseModel.fromMap(e));
+      print("Hello");
+      // showInSnackBar(data["message"]);
+      //List<dynamic> dataList= ['data'];
+      setState(() {
+        this.advertise;
+      });
+    }
+  }
+
 
   // getAdvertising() async{
   //   final res = await _http.getData("http://192.168.1.92:9092/getAddvertising");
@@ -41,27 +55,10 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
   // }
 
 
-  Future<AdvertiseModel> getAdvertising() async {
-    final response = await http
-        .get(Uri.parse('http://192.168.1.92:9092/getAddvertising'));
-
-    if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
 
 
-      return AdvertiseModel.fromMap(jsonDecode(response.body)[0]);
-
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
-    }
-  }
-
-
-
-
+  int selectedIndex = 0;
+  late PageController pageController;
 
 
 
@@ -70,8 +67,8 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
   void initState() {
     // TODO: implement initState
 
-      super.initState();
-      //fetchAlbum();
+      super.initState(); //fetchAlbum();
+      // pageController = PageController(initialPage: selectedIndex);
      _tabController = TabController(length: 3, vsync: this);
      getAdvertising();
   }
@@ -309,13 +306,34 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
           ),
 
 
+
         ),
 
 
       ),
-
-        bottomNavigationBar: BottomNavigation()
+      bottomNavigationBar: WaterDropNavBar(
+        backgroundColor: Colors.white,
+        onItemSelected: (index) {
+          setState(() {
+            selectedIndex = index;
+          });
+          pageController.animateToPage(selectedIndex,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeOutQuad);
+        },
+        selectedIndex: selectedIndex,
+        barItems: [
+          BarItem(
+            filledIcon: Icons.bookmark_rounded,
+            outlinedIcon: Icons.bookmark_border_rounded,
+          ),
+          BarItem(
+              filledIcon: Icons.favorite_rounded,
+              outlinedIcon: Icons.favorite_border_rounded),
+        ],
+      ),
     );
+
 
   }
 }

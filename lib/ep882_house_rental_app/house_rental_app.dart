@@ -18,11 +18,15 @@ class HouseRentalApp extends StatelessWidget {
       child: ChangeNotifierProvider(
         create: (context) => HouseFilterAreaProvider(),
         child: MaterialApp(
+
           debugShowCheckedModeBanner: false,
           routes: {
             "/" : (context) => HouseRentalHomePage(),
             "/search/filter" : (context) => HouseFilterPage()
+
           },
+
+
         ),
       ),
     );

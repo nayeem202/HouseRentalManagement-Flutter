@@ -12,6 +12,18 @@ class AdvertiseModel{
   late String images;
   late String imagesUri;
 
+  late String img2;
+  late String imgUri2;
+
+  late String img3;
+  late String imgUri3;
+
+  late String video;
+  late String videoType;
+
+  late double lat;
+  late double lng;
+
 //<editor-fold desc="Data Methods">
 
   AdvertiseModel({
@@ -39,6 +51,18 @@ class AdvertiseModel{
     required this.additionalinformation,
     required this.images,
     required this.imagesUri,
+    required  this.img2,
+    required this.imgUri2,
+    required this.img3,
+    required this.imgUri3,
+    required  this.video,
+    required this.videoType,
+    required this.lat,
+    required this.lng,
+
+
+
+
   });
 
   @override
@@ -130,6 +154,8 @@ class AdvertiseModel{
 
   factory AdvertiseModel.fromMap(Map<String, dynamic> map) {
     return AdvertiseModel.all(
+
+
       advertisingId: map['advertisingId'] as int,
       location: map['location'] as String,
       type: map['type'] as String,
@@ -141,6 +167,33 @@ class AdvertiseModel{
       additionalinformation: map['additionalinformation'] as String,
       images: map['images'] as String,
       imagesUri: map['imagesUri'] as String,
+      img2: map['img2'] as String,
+      imgUri2: map['imgUri2'] as String,
+
+      img3: map['img3'] as String,
+      imgUri3: map['imgUri3'] as String,
+
+      video: map['video'] as String,
+      videoType: map['videoType'] as String,
+
+      lat: map['lat'] as double,
+      lng: map['lng'] as double,
+
+
+    //     late String img2;
+    // late String imgUri2;
+    //
+    // late String img3;
+    //     late String imgUri3;
+    //
+    //     late String video;
+    //     late String videoType;
+    //
+    // late double lat;
+    // late double lng;
+
+
+
     );
   }
 
