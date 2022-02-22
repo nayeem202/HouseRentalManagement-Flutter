@@ -27,60 +27,26 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
 
 
   getAdvertising() async {
-    final res = await _http.getData("http://192.168.1.92:9092/getAddvertising");
+    final res = await _http.getData("http://192.168.0.105:9092/getAddvertising");
     if(res.statusCode == 200){
       List<dynamic> data = jsonDecode(res.body);
-
      advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
       print(advertise);
       //this.advertise = data.map((e) => AdvertiseModel.fromMap(e));
       print("Hello");
       // showInSnackBar(data["message"]);
-      //List<dynamic> dataList= ['data'];
       setState(() {
         this.advertise;
       });
     }
   }
 
-  // Future <List<AdvertiseModel>> getAdvertising() async {
-  //   final response  = await _http.getData("http://192.168.1.92:9092/getAddvertising");
-  //   // await http.get('https://jsonplaceholder.typicode.com/albums');
-  //   if (response.statusCode == 200) {
-  //     List <dynamic> data = json.decode(response.body);
-  //     return data.map((e) => AdvertiseModel.fromMap(e)).toList();
-  //   } else {
-  //     throw Exception('Unexpected error occured!');
-  //   }
-  // }
-
-
-  // getAdvertising() async{
-  //   final res = await _http.getData("http://192.168.1.92:9092/getAddvertising");
-  //   if(res.statusCode == 200){
-  //    Map<dynamic, dynamic>  data = json.decode(res.body)[0];
-  //    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  //     List<dynamic> dataList= data['data'];
-  //     this.advertise = dataList.map((e) => AdvertiseModel.fromMap(e)).toList();
-  //     setState(() {
-  //       this.advertise;
-  //     });
-  //   }
-  // }
-
-
-
-
   int selectedIndex = 0;
   late PageController pageController;
-
-
-
 
   @override
   void initState() {
     // TODO: implement initState
-
       super.initState(); //fetchAlbum();
       // pageController = PageController(initialPage: selectedIndex);
      _tabController = TabController(length: 3, vsync: this);
@@ -175,10 +141,10 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                     controller: _tabController,
                     children: [
                       ListView.builder(
-                          //itemCount: this.advertise.length,
-                          itemCount: houseItems.length,
+                          itemCount: this.advertise.length,
+                          //itemCount: houseItems.length,
                           itemBuilder: (context, index) {
-                            // AdvertiseModel model =  this.advertise[index];
+                            AdvertiseModel model =  this.advertise[index];
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Card(
@@ -201,7 +167,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                                                   decoration: BoxDecoration(
                                                     borderRadius: BorderRadius.circular(8),
                                                     image: DecorationImage(
-                                                        image: NetworkImage(houseItems[index].img ?? ""),
+                                                        image: NetworkImage(model.imagesUri),
                                                         fit: BoxFit.cover),
                                                   ),
                                                 ),
@@ -223,7 +189,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                                                           children: [
                                                             const Icon(Icons.star, color: Colors.blue),
                                                             const SizedBox(width: 8),
-                                                            Text(houseItems[index].star ?? "")
+                                                            Text(model.status)
                                                           ],
                                                         ),
                                                       ),
@@ -250,12 +216,12 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                                         child: Row(
                                           children: [
                                             Text(
-                                              "${houseItems[index].title}",
+                                              "House No- " + model.advertisingId.toString(),
                                               style: TextStyle(fontWeight: FontWeight.bold),
                                             ),
                                             Spacer(),
                                             Text(
-                                              "${houseItems[index].pricePerNight}",
+                                              model.price.toString() + " ৳",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 21),
                                             ),
@@ -273,7 +239,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                                               color: Colors.blue,
                                             ),
                                             Text(
-                                              "${houseItems[index].location}",
+                                              model.location,
                                               style: TextStyle(fontSize: 12),
                                             ),
                                             Icon(
@@ -281,7 +247,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                                               color: Colors.blue,
                                             ),
                                             Text(
-                                              "${houseItems[index].rooms}",
+                                              model.bedrooms.toString(),
                                               style: TextStyle(fontSize: 12),
                                             ),
                                             Icon(
@@ -289,7 +255,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                                               color: Colors.blue,
                                             ),
                                             Text(
-                                              "${houseItems[index].area}",
+                                              model.sqft.toString() + " sqft",
                                               style: TextStyle(fontSize: 12),
                                             ),
                                           ],
