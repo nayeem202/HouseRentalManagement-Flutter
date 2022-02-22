@@ -20,16 +20,19 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
   var advertise = [];
 
 
+
   static const snackBar = SnackBar(
     content: Text('Get Advertise SuccessFully '),
   );
 
 
   getAdvertising() async {
-    final res = await _http.getData("http://192.168.0.105:9092/getAddvertising");
+    final res = await _http.getData("http://192.168.1.92:9092/getAddvertising");
     if(res.statusCode == 200){
-      List<dynamic> data = json.decode(res.body);
-      this.advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
+      List<dynamic> data = jsonDecode(res.body);
+
+     advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
+      print(advertise);
       //this.advertise = data.map((e) => AdvertiseModel.fromMap(e));
       print("Hello");
       // showInSnackBar(data["message"]);
@@ -39,6 +42,17 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
       });
     }
   }
+
+  // Future <List<AdvertiseModel>> getAdvertising() async {
+  //   final response  = await _http.getData("http://192.168.1.92:9092/getAddvertising");
+  //   // await http.get('https://jsonplaceholder.typicode.com/albums');
+  //   if (response.statusCode == 200) {
+  //     List <dynamic> data = json.decode(response.body);
+  //     return data.map((e) => AdvertiseModel.fromMap(e)).toList();
+  //   } else {
+  //     throw Exception('Unexpected error occured!');
+  //   }
+  // }
 
 
   // getAdvertising() async{
@@ -70,7 +84,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
       super.initState(); //fetchAlbum();
       // pageController = PageController(initialPage: selectedIndex);
      _tabController = TabController(length: 3, vsync: this);
-     getAdvertising();
+       getAdvertising();
   }
 
   @override
@@ -336,4 +350,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
 
 
   }
+
+
+
 }
