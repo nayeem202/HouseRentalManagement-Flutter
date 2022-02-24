@@ -27,14 +27,14 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
 
 
   getAdvertising() async {
-    final res = await _http.getData("http://192.168.0.105:9092/getAddvertising");
+    final res = await _http.getData("http://192.168.1.92:9092/getAddvertising");
     if(res.statusCode == 200){
       List<dynamic> data = jsonDecode(res.body);
      advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
       print(advertise);
       //this.advertise = data.map((e) => AdvertiseModel.fromMap(e));
       print("Hello");
-      // showInSnackBar(data["message"]);
+      //showInSnackBar(data["message"]);
       setState(() {
         this.advertise;
       });
@@ -51,6 +51,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
       // pageController = PageController(initialPage: selectedIndex);
      _tabController = TabController(length: 3, vsync: this);
        getAdvertising();
+      pageController = PageController(initialPage: selectedIndex);
   }
 
   @override
@@ -291,27 +292,31 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
 
 
       ),
-      bottomNavigationBar: WaterDropNavBar(
-        backgroundColor: Colors.white,
-        onItemSelected: (index) {
-          setState(() {
-            selectedIndex = index;
-          });
-          pageController.animateToPage(selectedIndex,
-              duration: const Duration(milliseconds: 400),
-              curve: Curves.easeOutQuad);
-        },
-        selectedIndex: selectedIndex,
-        barItems: [
-          BarItem(
-            filledIcon: Icons.bookmark_rounded,
-            outlinedIcon: Icons.bookmark_border_rounded,
-          ),
-          BarItem(
-              filledIcon: Icons.favorite_rounded,
-              outlinedIcon: Icons.favorite_border_rounded),
-        ],
-      ),
+      // bottomNavigationBar: WaterDropNavBar(
+      //   backgroundColor: Colors.white,
+      //   onItemSelected: (index) {
+      //     setState(() {
+      //       selectedIndex = index;
+      //     });
+      //     pageController.animateToPage(selectedIndex,
+      //         duration: const Duration(milliseconds: 400),
+      //         curve: Curves.easeOutQuad);
+      //   },
+      //   selectedIndex: selectedIndex,
+      //   barItems: [
+      //     BarItem(
+      //       filledIcon: Icons.bookmark_rounded,
+      //       outlinedIcon: Icons.bookmark_border_rounded,
+      //
+      //     ),
+      //     BarItem(
+      //         filledIcon: Icons.favorite_rounded,
+      //         outlinedIcon: Icons.favorite_border_rounded),
+      //
+      //
+      //   ],
+      //
+      // ),
     );
 
 

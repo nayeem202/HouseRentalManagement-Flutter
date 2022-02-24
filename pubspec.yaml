@@ -46,7 +46,8 @@ dependencies:
   freezed_annotation: any
   provider: any
   water_drop_nav_bar:
-
+  bottom_navy_bar: ^5.6.0
+  fluid_bottom_nav_bar: ^1.3.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
