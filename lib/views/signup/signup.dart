@@ -1,40 +1,40 @@
+
 import 'dart:developer';
 
 import 'package:client_mobile/helper/http_helper.dart';
-import 'package:client_mobile/views/signup/signup.dart';
+import 'package:client_mobile/views/login/login.dart';
+import 'package:client_mobile/views/signup/signup_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'login_model.dart';
-
-class Login extends StatefulWidget {
+class Signup extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _SignupState createState() => _SignupState();
 }
 
-class _LoginState extends State<Login> {
+class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
   final _http = HttpHelper();
+  final _name = TextEditingController();
   final _username = TextEditingController();
+  final _email = TextEditingController();
+  final _phone = TextEditingController();
   final _password = TextEditingController();
 
-  login() async{
-
+  save() async{
+    String name = _name.value.text;
     String username = _username.value.text;
+    String email = _email.value.text;
+    String phone = _phone.value.text;
     String password = _password.value.text;
-    var loginModel = LoginModel(username: username, password: password);
-    String _body = loginModel.toJson();
+    var model = SignupModel(name: name, username: username, email: email, phone: phone, password: password);
+    String _body = model.toJson();
     try{
-      final response = await _http.postData('http://192.168.0.104:9092/login', _body);
+      final response = await _http.postData('http://192.168.0.104:9092/saveUser', _body);
       if (response.statusCode == 200){
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Signup()),
-        );
-
         Fluttertoast.showToast(
-            msg: "Login SuccessFul",
+            msg: "Registration Successful",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
@@ -42,11 +42,10 @@ class _LoginState extends State<Login> {
             textColor: Colors.white,
             fontSize: 16.0
         );
-
       }
       else{
         Fluttertoast.showToast(
-            msg: "Login Failed",
+            msg: "Registration Failed",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
@@ -55,6 +54,8 @@ class _LoginState extends State<Login> {
             fontSize: 16.0
         );
       }
+      
+   
 
     }catch(e){
       log(e.toString());
@@ -69,6 +70,8 @@ class _LoginState extends State<Login> {
       );
     }
   }
+
+
 
 
   @override
@@ -86,15 +89,26 @@ class _LoginState extends State<Login> {
               Container(
                 width: width,
                 height: height*0.45,
-                child: Image.asset('assets/image/signin.jpg',fit: BoxFit.fill,),
+                child: Image.asset('assets/image/signup.jpg',fit: BoxFit.fill,),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('Login',style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold),),
+                    Text('Signup',style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold),),
                   ],
+                ),
+              ),
+              SizedBox(height: 30.0,),
+              TextField(
+                controller: _name,
+                decoration: InputDecoration(
+                  hintText: 'Name',
+                  suffixIcon: Icon(Icons.person),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
                 ),
               ),
               SizedBox(height: 30.0,),
@@ -108,6 +122,29 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
+              SizedBox(height: 30.0,),
+              TextField(
+                controller: _email,
+                decoration: InputDecoration(
+                  hintText: 'Email',
+                  suffixIcon: Icon(Icons.person),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                ),
+              ),
+              SizedBox(height: 30.0,),
+              TextField(
+                controller: _phone,
+                decoration: InputDecoration(
+                  hintText: 'Phone',
+                  suffixIcon: Icon(Icons.person),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                ),
+              ),
+
               SizedBox(height: 20.0,),
               TextField(
                 controller: _password,
@@ -120,6 +157,9 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
+
+
+
               SizedBox(height: 30.0,),
               Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -127,34 +167,37 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     RaisedButton(
-                      child: Text('Login'),
+                      child: Text('Signup'),
                       color: Color(0xffEE7B23),
                       onPressed: (){
-                        login();
+                        save();
                       },
                     ),
                   ],
                 ),
               ),
-              SizedBox(height:20.0),
-              GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Signup()));
-                },
-                child: Text.rich(
-                  TextSpan(
-                      text: 'Don\'t have an account ? ',
-                      children: [
-                        TextSpan(
-                          text: 'Signup',
-                          style: TextStyle(
-                              color: Color(0xffEE7B23)
+              Padding(padding: EdgeInsets.all(30.0),
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
+                  },
+                  child: Text.rich(
+                    TextSpan(
+                        text: 'Already member ?',
+                        children: [
+                          TextSpan(
+                            text: 'Login',
+                            style: TextStyle(
+                                color: Color(0xffEE7B23)
+                            ),
                           ),
-                        ),
-                      ]
+                        ]
+                    ),
                   ),
                 ),
+
               ),
+
 
 
             ],

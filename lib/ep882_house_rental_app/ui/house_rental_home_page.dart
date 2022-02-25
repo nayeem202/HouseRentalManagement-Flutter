@@ -81,6 +81,14 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                           height: 48,
                           decoration: BoxDecoration(
                             color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
 
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -101,7 +109,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                                 onTap: () => Navigator.of(context).pushNamed("/search/filter"),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.blue,
+                                    color: Colors.deepPurpleAccent,
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
@@ -119,7 +127,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                       ],
                     ),
                   ),
-                  flex: 2,
+                  flex: 3,
                 ),
                 TabBar(
                   isScrollable: true,
@@ -135,6 +143,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                   ],
                 ),
                 Expanded(
+
                   child: TabBarView(
                     controller: _tabController,
                     children: [
