@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
     var loginModel = LoginModel(username: username, password: password);
     String _body = loginModel.toJson();
     try{
-      final response = await _http.postData('http://192.168.1.92:9092/login', _body);
+      final response = await _http.postData('http://192.168.0.104:9092/login', _body);
       if (response.statusCode == 200){
         Navigator.push(
           context,

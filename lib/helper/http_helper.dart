@@ -14,7 +14,7 @@ class HttpHelper {
       //ToDo: add token
       var headers = {
         "Content-Type": "application/json",
-        'Authorization': 'Bearer '
+        //'Authorization': 'Bearer '
       };
       var uri =Uri.parse(url);
       final response = await get(uri, headers: headers);
@@ -33,7 +33,7 @@ class HttpHelper {
       Uri url = Uri.parse(_url);
       var headers = {
         "Content-Type": "application/json",
-        'Authorization': 'Bearer '
+        //'Authorization': 'Bearer '
       };
       final response = await post(url, headers: headers, body: _body);
       responseJson = _returnResponse(response);

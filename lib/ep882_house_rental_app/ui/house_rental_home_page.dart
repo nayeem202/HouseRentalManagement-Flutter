@@ -1,8 +1,5 @@
 import 'dart:convert';
-
-import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 import 'package:client_mobile/ep882_house_rental_app/model/AdvertiseModel.dart';
-import 'package:client_mobile/ep882_house_rental_app/model/house.dart';
 import 'package:client_mobile/helper/http_helper.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_notebook_14th_story/ep882_house_rental_app/model/house.dart';
@@ -27,7 +24,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
 
 
   getAdvertising() async {
-    final res = await _http.getData("http://192.168.1.92:9092/getAddvertising");
+    final res = await _http.getData("http://192.168.0.104:9092/getAddvertising");
     if(res.statusCode == 200){
       List<dynamic> data = jsonDecode(res.body);
      advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
@@ -122,7 +119,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                       ],
                     ),
                   ),
-                  flex: 3,
+                  flex: 2,
                 ),
                 TabBar(
                   isScrollable: true,
@@ -133,7 +130,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                   controller: _tabController,
                   tabs: const [
                     Tab(text: "Recommended"),
-                    Tab(text: "Nearest"),
+                    Tab(text: "Featured"),
                     Tab(text: "Popular"),
                   ],
                 ),
