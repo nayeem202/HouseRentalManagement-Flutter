@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:client_mobile/ep882_house_rental_app/model/AdvertiseModel.dart';
 import 'package:client_mobile/helper/http_helper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_notebook_14th_story/ep882_house_rental_app/model/house.dart';
 
@@ -15,6 +16,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
   late TabController _tabController;
   final _http = new HttpHelper();
   var advertise = [];
+  final _search = TextEditingController();
 
 
 
@@ -22,6 +24,22 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
     content: Text('Get Advertise SuccessFully '),
   );
 
+
+  getAdvertisingBySearch() async {
+    String search = _search.value.text;
+    final res = await _http.getData("http://192.168.0.104:9092/getAddvertisingBySearch/"+search);
+    if(res.statusCode == 200){
+      List<dynamic> data = jsonDecode(res.body);
+      advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
+      print(advertise);
+      //this.advertise = data.map((e) => AdvertiseModel.fromMap(e));
+      print(search);
+      //showInSnackBar(data["message"]);
+      setState(() {
+        this.advertise;
+      });
+    }
+  }
 
   getAdvertising() async {
     final res = await _http.getData("http://192.168.0.104:9092/getAddvertising");
@@ -47,7 +65,15 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
       super.initState(); //fetchAlbum();
       // pageController = PageController(initialPage: selectedIndex);
      _tabController = TabController(length: 3, vsync: this);
-       getAdvertising();
+      if(_search == null || _search == ""){
+        getAdvertising();
+      }else{
+        getAdvertising();
+      }
+
+
+      //getAdvertising();
+      //getAdvertisingBySearch();
       pageController = PageController(initialPage: selectedIndex);
   }
 
@@ -94,12 +120,28 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                           ),
                           child: Row(
                             children: [
-                              const Expanded(
+                               Expanded(
                                   child: Padding(
                                 padding: EdgeInsets.all(10.0),
                                 child: TextField(
+                                  textInputAction: TextInputAction.search,
+                                  controller: _search,
                                   decoration: InputDecoration(
-                                      hintText: "Search", icon: Icon(Icons.search), border: InputBorder.none),
+                                      //hintText: "Search", icon: Icon(Icons.search),
+                                      hintText: "Search",
+                                      prefixIcon:  IconButton(icon: Icon(Icons.search),onPressed: () {
+                                        getAdvertisingBySearch();
+                                        setState(() {
+
+                                        });},),
+
+                                      suffixIcon:  IconButton(icon: Icon(Icons.clear),onPressed: () {
+                                        setState(() {
+                                          getAdvertising();
+                                          _search.clear();
+                                        });},) ,
+                                      border: InputBorder.none),
+
                                 ),
                               )),
                               const SizedBox(
@@ -143,7 +185,6 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                   ],
                 ),
                 Expanded(
-
                   child: TabBarView(
                     controller: _tabController,
                     children: [
