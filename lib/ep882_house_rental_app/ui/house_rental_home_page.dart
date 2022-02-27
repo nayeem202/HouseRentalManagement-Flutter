@@ -12,23 +12,22 @@ class HouseRentalHomePage extends StatefulWidget {
   _HouseRentalHomePageState createState() => _HouseRentalHomePageState();
 }
 
-class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTickerProviderStateMixin {
+class _HouseRentalHomePageState extends State<HouseRentalHomePage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final _http = new HttpHelper();
   var advertise = [];
   final _search = TextEditingController();
 
-
-
   static const snackBar = SnackBar(
     content: Text('Get Advertise SuccessFully '),
   );
 
-
   getAdvertisingBySearch() async {
     String search = _search.value.text;
-    final res = await _http.getData("http://192.168.0.104:9092/getAddvertisingBySearch/"+search);
-    if(res.statusCode == 200){
+    final res = await _http
+        .getData("http://192.168.0.104:9092/getAddvertisingBySearch/" + search);
+    if (res.statusCode == 200) {
       List<dynamic> data = jsonDecode(res.body);
       advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
       print(advertise);
@@ -42,10 +41,11 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
   }
 
   getAdvertising() async {
-    final res = await _http.getData("http://192.168.0.104:9092/getAddvertising");
-    if(res.statusCode == 200){
+    final res =
+        await _http.getData("http://192.168.0.104:9092/getAddvertising");
+    if (res.statusCode == 200) {
       List<dynamic> data = jsonDecode(res.body);
-     advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
+      advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
       print(advertise);
       //this.advertise = data.map((e) => AdvertiseModel.fromMap(e));
       print("Hello");
@@ -62,49 +62,44 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
   @override
   void initState() {
     // TODO: implement initState
-      super.initState(); //fetchAlbum();
-      // pageController = PageController(initialPage: selectedIndex);
-     _tabController = TabController(length: 3, vsync: this);
-      if(_search == null || _search == ""){
-        getAdvertising();
-      }else{
-        getAdvertising();
-      }
+    super.initState(); //fetchAlbum();
+    // pageController = PageController(initialPage: selectedIndex);
+    _tabController = TabController(length: 3, vsync: this);
+    if (_search == null || _search == "") {
+      getAdvertising();
+    } else {
+      getAdvertising();
+    }
 
-
-      //getAdvertising();
-      //getAdvertisingBySearch();
-      pageController = PageController(initialPage: selectedIndex);
+    //getAdvertising();
+    //getAdvertisingBySearch();
+    pageController = PageController(initialPage: selectedIndex);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-     // appBar: AppBar(title: Text("House Rental Management"), centerTitle: true,),
+      // appBar: AppBar(title: Text("House Rental Management"), centerTitle: true,),
       resizeToAvoidBottomInset: false,
 
       body: Container(
-
         child: SafeArea(
-
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
+                SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
                         // SizedBox(
                         //   height: 24,
                         // ),
                         Container(
-                          height: 48,
+                          height: 57,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             boxShadow: [
@@ -112,49 +107,55 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                                 color: Colors.grey.withOpacity(0.5),
                                 spreadRadius: 5,
                                 blurRadius: 7,
-                                offset: Offset(0, 3), // changes position of shadow
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
                               ),
                             ],
-
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(
                             children: [
-                               Expanded(
+                              Expanded(
                                   child: Padding(
                                 padding: EdgeInsets.all(10.0),
                                 child: TextField(
                                   textInputAction: TextInputAction.search,
                                   controller: _search,
                                   decoration: InputDecoration(
-                                      //hintText: "Search", icon: Icon(Icons.search),
-                                      hintText: "Search",
-                                      prefixIcon:  IconButton(icon: Icon(Icons.search),onPressed: () {
-                                        getAdvertisingBySearch();
-                                        setState(() {
-
-                                        });},),
-
-                                      suffixIcon:  IconButton(icon: Icon(Icons.clear),onPressed: () {
-                                        setState(() {
-                                          getAdvertising();
-                                          _search.clear();
-                                        });},) ,
+                                     // hintText: "Search", icon: Icon(Icons.search),
+                                    hintText: "Search",
+                                      prefixIcon: IconButton(
+                                        icon: Icon(Icons.search),
+                                        onPressed: () {
+                                          getAdvertisingBySearch();
+                                          setState(() {});
+                                        },
+                                      ),
+                                      suffixIcon: IconButton(
+                                        icon: Icon(Icons.clear),
+                                        onPressed: () {
+                                          setState(() {
+                                            getAdvertising();
+                                            _search.clear();
+                                          });
+                                        },
+                                      ),
                                       border: InputBorder.none),
-
                                 ),
                               )),
                               const SizedBox(
                                 width: 16,
                               ),
                               GestureDetector(
-                                onTap: () => Navigator.of(context).pushNamed("/search/filter"),
+                                onTap: () => Navigator.of(context)
+                                    .pushNamed("/search/filter"),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: Colors.deepPurpleAccent,
                                     borderRadius: BorderRadius.circular(8),
                                   ),
-                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 0),
                                   child: const Center(
                                     child: Icon(
                                       Icons.filter_alt,
@@ -169,20 +170,22 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                       ],
                     ),
                   ),
-                  flex: 3,
                 ),
-                TabBar(
-                  isScrollable: true,
-                  labelColor: Colors.black,
-                  unselectedLabelColor: Colors.grey,
-                  indicatorColor: Colors.transparent,
-                  labelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  controller: _tabController,
-                  tabs: const [
-                    Tab(text: "Recommended"),
-                    Tab(text: "Featured"),
-                    Tab(text: "Popular"),
-                  ],
+                SingleChildScrollView(
+                  child: TabBar(
+                    isScrollable: true,
+                    labelColor: Colors.black,
+                    unselectedLabelColor: Colors.grey,
+                    indicatorColor: Colors.transparent,
+                    labelStyle: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
+                    controller: _tabController,
+                    tabs: const [
+                      Tab(text: "Recommended"),
+                      Tab(text: "Featured"),
+                      Tab(text: "Popular"),
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: TabBarView(
@@ -192,7 +195,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                           itemCount: this.advertise.length,
                           //itemCount: houseItems.length,
                           itemBuilder: (context, index) {
-                            AdvertiseModel model =  this.advertise[index];
+                            AdvertiseModel model = this.advertise[index];
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Card(
@@ -203,7 +206,10 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: SizedBox(
-                                          height: MediaQuery.of(context).size.height / 3,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              3,
                                           child: Stack(
                                             children: [
                                               Positioned(
@@ -213,9 +219,12 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                                                 bottom: 0,
                                                 child: Container(
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                     image: DecorationImage(
-                                                        image: NetworkImage(model.imagesUri),
+                                                        image: NetworkImage(
+                                                            model.imagesUri),
                                                         fit: BoxFit.cover),
                                                   ),
                                                 ),
@@ -225,31 +234,49 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                                                   right: 16,
                                                   top: 16,
                                                   child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       Container(
-                                                        decoration: BoxDecoration(
+                                                        decoration:
+                                                            BoxDecoration(
                                                           color: Colors.white,
-                                                          borderRadius: BorderRadius.circular(8),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
                                                         ),
-                                                        padding: const EdgeInsets.all(8),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8),
                                                         child: Row(
                                                           children: [
-                                                            const Icon(Icons.star, color: Colors.blue),
-                                                            const SizedBox(width: 8),
+                                                            const Icon(
+                                                                Icons.star,
+                                                                color: Colors
+                                                                    .blue),
+                                                            const SizedBox(
+                                                                width: 8),
                                                             Text(model.status)
                                                           ],
                                                         ),
                                                       ),
                                                       Container(
-                                                        decoration: BoxDecoration(
+                                                        decoration:
+                                                            BoxDecoration(
                                                           color: Colors.white,
-                                                          borderRadius: BorderRadius.circular(8),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
                                                         ),
-                                                        padding: const EdgeInsets.all(8),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8),
                                                         child: Row(
                                                           children: [
-                                                            Icon(Icons.favorite, color: Colors.blue[500]),
+                                                            Icon(Icons.favorite,
+                                                                color: Colors
+                                                                    .blue[500]),
                                                           ],
                                                         ),
                                                       )
@@ -264,14 +291,19 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                                         child: Row(
                                           children: [
                                             Text(
-                                              "House No- " + model.advertisingId.toString(),
-                                              style: TextStyle(fontWeight: FontWeight.bold),
+                                              "House No- " +
+                                                  model.advertisingId
+                                                      .toString(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
                                             ),
                                             Spacer(),
                                             Text(
                                               model.price.toString() + " ৳",
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 21),
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.blue,
+                                                  fontSize: 21),
                                             ),
                                             Text("/Month"),
                                           ],
@@ -280,7 +312,8 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Icon(
                                               Icons.location_on,
@@ -332,12 +365,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
               ],
             ),
           ),
-
-
-
         ),
-
-
       ),
       // bottomNavigationBar: WaterDropNavBar(
       //   backgroundColor: Colors.white,
@@ -365,10 +393,5 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage> with SingleTi
       //
       // ),
     );
-
-
   }
-
-
-
 }
