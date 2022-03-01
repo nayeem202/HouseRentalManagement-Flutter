@@ -1,43 +1,43 @@
 
+import 'package:client_mobile/ep882_house_rental_app/ui/house_rental_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../signup/signup.dart';
+
 class CategoryPage extends StatelessWidget {
+  late final List<String> category = ["Apartment", "Duplex", "Single Family Detached House", "Villa", "Tiny home", "Commercial Space"];
+
 
   Items item1 = new Items(
       title: "Apartment",
-      subtitle: "March, Wednesday",
-      event: "3 Events",
+      subtitle: "Apartment",
       img: "assets/image/apartment.png");
 
   Items item2 = new Items(
     title: "Duplex",
-    subtitle: "Bocali, Apple",
-    event: "4 Items",
+    subtitle: "Duplex",
     img: "assets/image/duplex.png",
   );
   Items item3 = new Items(
     title: "Single Family Detached House",
-    subtitle: "Lucy Mao going to Office",
-    event: "",
+    subtitle: "Single Family Detached House",
     img: "assets/image/singlefamily.png",
   );
   Items item4 = new Items(
     title: "Villa",
-    subtitle: "Rose favirited your Post",
-    event: "",
+    subtitle: "Villa",
     img: "assets/image/villa.jpg",
+
   );
   Items item5 = new Items(
     title: "Tiny Home",
-    subtitle: "Homework, Design",
-    event: "4 Items",
+    subtitle: "Tiny Home",
     img: "assets/image/tiny.jpg",
   );
   Items item6 = new Items(
     title: "Commercial Space",
     subtitle: "",
-    event: "2 Items",
     img: "assets/image/commercial.jpg",
   );
 
@@ -105,14 +105,39 @@ class CategoryPage extends StatelessWidget {
                 SizedBox(
                   height: 14,
                 ),
-                Text(
-                  data.event,
-                  style: GoogleFonts.openSans(
-                      textStyle: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600)),
+
+                TextButton(
+                  onPressed: (){
+                    if(data.title== "Apartment"){
+                      print("Hello");
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(category: category[0])));
+                    }
+                    if(data.title== "Duplex"){
+                      print("Hello");
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(category: category[1])));
+                    }
+                    if(data.title== "Single Family Detached House"){
+                      print("Hello");
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(category: category[2])));
+                    }
+                    if(data.title== "Villa"){
+                      print("Hello");
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(category: category[3])));
+                    }
+                    if(data.title == "Tiny Home"){
+                      print("Hello");
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(category: category[4])));
+                    }
+                    if(data.title== "Commercial Space"){
+                      print("Hello");
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(category: category[5])));
+                    }
+                  },
+                  child: Text(
+                      "Click me"
+                  ),
                 ),
+
               ],
             ),
           );
@@ -127,7 +152,6 @@ class CategoryPage extends StatelessWidget {
 class Items {
   String title;
   String subtitle;
-  String event;
   String img;
-  Items({required this.title, required this.subtitle, required this.event, required this.img});
+  Items({required this.title, required this.subtitle,required this.img});
 }

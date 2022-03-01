@@ -1,7 +1,6 @@
 import 'package:client_mobile/ep882_house_rental_app/house_rental_app.dart';
 import 'package:client_mobile/ep882_house_rental_app/ui/house_rental_home_page.dart';
 import 'package:client_mobile/views/category/categorygriddashboard.dart';
-import 'package:client_mobile/views/category/houseCategory.dart';
 import 'package:client_mobile/views/login/login.dart';
 //import 'package:client_mobile/views/login/login_page.dart';
 import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
@@ -70,7 +69,7 @@ class _MyApp extends State {
           _child = CategoryPage();
           break;
         case 1:
-          _child = HouseRentalHomePage();
+          _child = HouseRentalHomePage(category: '',);
           break;
         case 2:
           _child = Login();

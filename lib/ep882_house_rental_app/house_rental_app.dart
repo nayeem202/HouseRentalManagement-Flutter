@@ -21,7 +21,7 @@ class HouseRentalApp extends StatelessWidget {
 
           debugShowCheckedModeBanner: false,
           routes: {
-            "/" : (context) => HouseRentalHomePage(),
+            "/" : (context) => HouseRentalHomePage(category: '',),
             "/search/filter" : (context) => HouseFilterPage()
 
           },

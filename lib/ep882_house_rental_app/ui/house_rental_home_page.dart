@@ -1,3 +1,4 @@
+// import 'package:flutter_notebook_14th_story/ep882_house_rental_app/model/house.dart';
 import 'dart:convert';
 import 'package:client_mobile/ep882_house_rental_app/model/AdvertiseModel.dart';
 import 'package:client_mobile/helper/http_helper.dart';
@@ -5,10 +6,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../helper/constant.dart';
-// import 'package:flutter_notebook_14th_story/ep882_house_rental_app/model/house.dart';
+
 
 class HouseRentalHomePage extends StatefulWidget {
-  const HouseRentalHomePage({Key? key}) : super(key: key);
+
+  const HouseRentalHomePage({Key? key, required String category}) : super(key: key);
+
+
 
   @override
   _HouseRentalHomePageState createState() => _HouseRentalHomePageState();
@@ -33,14 +37,30 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
       List<dynamic> data = jsonDecode(res.body);
       advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
       print(advertise);
-      //this.advertise = data.map((e) => AdvertiseModel.fromMap(e));
       print(search);
-      //showInSnackBar(data["message"]);
       setState(() {
         this.advertise;
       });
     }
   }
+
+
+  getAdvertisingBYCategory() async {
+    String category = "Apartment";
+    final res = await _http
+        .getData(getAdvertisingByCategory+category);
+    if (res.statusCode == 200) {
+      List<dynamic> data = jsonDecode(res.body);
+      advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
+      print(advertise);
+      print(category);
+      setState(() {
+        this.advertise;
+      });
+    }
+  }
+
+
 
   getAdvertising() async {
     final res =
@@ -73,8 +93,8 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
       getAdvertising();
     }
 
-    //getAdvertising();
-    //getAdvertisingBySearch();
+    //getAdvertisingBYCategory();
+
     pageController = PageController(initialPage: selectedIndex);
   }
 
@@ -259,7 +279,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                                                                     .blue),
                                                             const SizedBox(
                                                                 width: 8),
-                                                            Text(model.status)
+                                                            Text(model.type)
                                                           ],
                                                         ),
                                                       ),
