@@ -1,6 +1,7 @@
 
 import 'dart:developer';
 
+import 'package:client_mobile/helper/constant.dart';
 import 'package:client_mobile/helper/http_helper.dart';
 import 'package:client_mobile/views/login/login.dart';
 import 'package:client_mobile/views/signup/signup_model.dart';
@@ -31,7 +32,7 @@ class _SignupState extends State<Signup> {
     var model = SignupModel(name: name, username: username, email: email, phone: phone, password: password);
     String _body = model.toJson();
     try{
-      final response = await _http.postData('http://192.168.0.104:9092/saveUser', _body);
+      final response = await _http.postData(registerApi, _body);
       if (response.statusCode == 200){
         Fluttertoast.showToast(
             msg: "Registration Successful",

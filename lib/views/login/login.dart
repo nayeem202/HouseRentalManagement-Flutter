@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../helper/constant.dart';
 import 'login_model.dart';
 
 class Login extends StatefulWidget {
@@ -26,7 +27,7 @@ class _LoginState extends State<Login> {
     var loginModel = LoginModel(username: username, password: password);
     String _body = loginModel.toJson();
     try{
-      final response = await _http.postData('http://192.168.0.104:9092/login', _body);
+      final response = await _http.postData(loginApi, _body);
       if (response.statusCode == 200){
         Navigator.push(
           context,

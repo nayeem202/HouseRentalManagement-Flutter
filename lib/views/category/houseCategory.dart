@@ -43,7 +43,7 @@ class CategoryState extends State<Category> {
                 IconButton(
                   alignment: Alignment.topCenter,
                   icon: Image.asset(
-                    "assets/notification.png",
+                    "assets/image/apartment.png",
                     width: 24,
                   ),
                   onPressed: () {},
@@ -54,7 +54,7 @@ class CategoryState extends State<Category> {
           SizedBox(
             height: 40,
           ),
-         GridDashboard()
+         Category()
         ],
       ),
     );

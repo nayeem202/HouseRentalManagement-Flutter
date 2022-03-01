@@ -74,6 +74,12 @@ flutter:
   assets:
      - assets/image/signin.jpg
      - assets/image/signup.jpg
+     - assets/image/apartment.png
+     - assets/image/commercial.jpg
+     - assets/image/duplex.png
+     - assets/image/singlefamily.png
+     - assets/image/tiny.jpg
+     - assets/image/villa.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
