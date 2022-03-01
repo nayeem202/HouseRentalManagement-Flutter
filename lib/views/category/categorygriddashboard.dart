@@ -6,8 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../signup/signup.dart';
 
 class CategoryPage extends StatelessWidget {
-  late final List<String> category = ["Apartment", "Duplex", "Single Family Detached House", "Villa", "Tiny home", "Commercial Space"];
-
+  late final List<String> value = ["Apartment", "Duplex", "Single Family Detached House", "Villa", "Tiny home", "Commercial Space"];
+  //late String value;
 
   Items item1 = new Items(
       title: "Apartment",
@@ -110,27 +110,29 @@ class CategoryPage extends StatelessWidget {
                   onPressed: (){
                     if(data.title== "Apartment"){
                       print("Hello");
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(category: category[0])));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(value: value[0],)
+                      ));
                     }
                     if(data.title== "Duplex"){
                       print("Hello");
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(category: category[1])));
+                      print(value[0]);
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(value: value[1],)));
                     }
                     if(data.title== "Single Family Detached House"){
                       print("Hello");
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(category: category[2])));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(value: value[2])));
                     }
                     if(data.title== "Villa"){
                       print("Hello");
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(category: category[3])));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(value: value[3])));
                     }
                     if(data.title == "Tiny Home"){
                       print("Hello");
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(category: category[4])));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(value: value[4])));
                     }
                     if(data.title== "Commercial Space"){
                       print("Hello");
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(category: category[5])));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(value: value[5])));
                     }
                   },
                   child: Text(

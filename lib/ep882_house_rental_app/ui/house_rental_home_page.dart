@@ -1,5 +1,7 @@
 // import 'package:flutter_notebook_14th_story/ep882_house_rental_app/model/house.dart';
 import 'dart:convert';
+import 'dart:core';
+import 'dart:core';
 import 'package:client_mobile/ep882_house_rental_app/model/AdvertiseModel.dart';
 import 'package:client_mobile/helper/http_helper.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,16 +12,22 @@ import '../../helper/constant.dart';
 
 class HouseRentalHomePage extends StatefulWidget {
 
-  const HouseRentalHomePage({Key? key, required String category}) : super(key: key);
+  String value;
+  HouseRentalHomePage({required this.value});
+  //const HouseRentalHomePage({Key? key}, this.value) : super(key: key);
 
 
 
   @override
-  _HouseRentalHomePageState createState() => _HouseRentalHomePageState();
+  _HouseRentalHomePageState createState() => _HouseRentalHomePageState(value);
 }
 
 class _HouseRentalHomePageState extends State<HouseRentalHomePage>
     with SingleTickerProviderStateMixin {
+
+
+  late String value;
+  _HouseRentalHomePageState(this.value);
   late TabController _tabController;
   final _http = new HttpHelper();
   var advertise = [];
@@ -46,14 +54,14 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
 
 
   getAdvertisingBYCategory() async {
+    print(value);
     String category = "Apartment";
     final res = await _http
         .getData(getAdvertisingByCategory+category);
     if (res.statusCode == 200) {
       List<dynamic> data = jsonDecode(res.body);
       advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
-      print(advertise);
-      print(category);
+      //print(advertise);
       setState(() {
         this.advertise;
       });
@@ -68,9 +76,8 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
     if (res.statusCode == 200) {
       List<dynamic> data = jsonDecode(res.body);
       advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
-      print(advertise);
+      //print(advertise);
       //this.advertise = data.map((e) => AdvertiseModel.fromMap(e));
-      print("Hello");
       //showInSnackBar(data["message"]);
       setState(() {
         this.advertise;
@@ -87,13 +94,13 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
     super.initState(); //fetchAlbum();
     // pageController = PageController(initialPage: selectedIndex);
     _tabController = TabController(length: 3, vsync: this);
-    if (_search == null || _search == "") {
-      getAdvertising();
-    } else {
-      getAdvertising();
-    }
+    // if (_search == null || _search == "") {
+    //   getAdvertising();
+    // } else {
+    //   getAdvertising();
+    // }
 
-    //getAdvertisingBYCategory();
+    getAdvertisingBYCategory();
 
     pageController = PageController(initialPage: selectedIndex);
   }
@@ -145,7 +152,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                                   controller: _search,
                                   decoration: InputDecoration(
                                      // hintText: "Search", icon: Icon(Icons.search),
-                                    hintText: "Search",
+                                    hintText: "gf",
                                       prefixIcon: IconButton(
                                         icon: Icon(Icons.search),
                                         onPressed: () {

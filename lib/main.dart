@@ -69,7 +69,7 @@ class _MyApp extends State {
           _child = CategoryPage();
           break;
         case 1:
-          _child = HouseRentalHomePage(category: '',);
+          _child = HouseRentalHomePage(value: '',);
           break;
         case 2:
           _child = Login();
