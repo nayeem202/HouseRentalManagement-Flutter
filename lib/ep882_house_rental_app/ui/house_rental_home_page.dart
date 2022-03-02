@@ -42,6 +42,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
     final res = await _http
         .getData(getAdvertisingBySearchApi + search);
     if (res.statusCode == 200) {
+      print(value.toString());
       List<dynamic> data = jsonDecode(res.body);
       advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
       print(advertise);
@@ -54,10 +55,10 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
 
 
   getAdvertisingBYCategory() async {
-    print(value);
-    String category = "Apartment";
+
+    //String category = "Apartment";
     final res = await _http
-        .getData(getAdvertisingByCategory+category);
+        .getData(getAdvertisingByCategory+value);
     if (res.statusCode == 200) {
       List<dynamic> data = jsonDecode(res.body);
       advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
@@ -94,13 +95,27 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
     super.initState(); //fetchAlbum();
     // pageController = PageController(initialPage: selectedIndex);
     _tabController = TabController(length: 3, vsync: this);
-    // if (_search == null || _search == "") {
-    //   getAdvertising();
-    // } else {
+
+
+    // if(value != "" || value != null){
+    //   getAdvertisingBYCategory();
+    // }else if(v){
+    //
+    // }
+    // else{
     //   getAdvertising();
     // }
 
-    getAdvertisingBYCategory();
+    if( (value == "Apartment") || (value == "Duplex") ||  (value ==  "Single Family Detached House") || (value == "Villa") || (value == "Tiny home") || value == "Commercial Space"){
+      getAdvertisingBYCategory();
+    }
+    else if (_search == null || _search == "") {
+      getAdvertising();
+    }
+    else {
+      getAdvertising();
+    }
+
 
     pageController = PageController(initialPage: selectedIndex);
   }
@@ -152,7 +167,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                                   controller: _search,
                                   decoration: InputDecoration(
                                      // hintText: "Search", icon: Icon(Icons.search),
-                                    hintText: "gf",
+                                    hintText: "Search",
                                       prefixIcon: IconButton(
                                         icon: Icon(Icons.search),
                                         onPressed: () {

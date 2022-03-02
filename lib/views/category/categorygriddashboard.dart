@@ -51,7 +51,7 @@ class CategoryPage extends StatelessWidget {
     return Column(
       children: <Widget>[
         SizedBox(
-          height: 30,
+          height: 100,
         ),
         Expanded(child: GridView.count(
         childAspectRatio: 1.0,
