@@ -47,7 +47,7 @@ class CategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Items> myList = [item1, item2, item3, item4, item5, item6];
-    var color = 0xff453658;
+    //var color = 0xff453658;
     return Column(
       children: <Widget>[
         SizedBox(
@@ -62,7 +62,8 @@ class CategoryPage extends StatelessWidget {
         children: myList.map((data) {
           return Container(
             decoration: BoxDecoration(
-                color: Color(color), borderRadius: BorderRadius.circular(10),
+                 borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
                 boxShadow: [
             BoxShadow(
             color: Colors.grey.withOpacity(0.5),
