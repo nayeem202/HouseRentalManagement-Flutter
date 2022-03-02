@@ -37,7 +37,7 @@ class CategoryPage extends StatelessWidget {
   );
   Items item6 = new Items(
     title: "Commercial Space",
-    subtitle: "",
+    subtitle: "Commercial Space",
     img: "assets/image/commercial.jpg",
   );
 
@@ -88,7 +88,7 @@ class CategoryPage extends StatelessWidget {
                   data.title,
                   style: GoogleFonts.openSans(
                       textStyle: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 11,
                           fontWeight: FontWeight.w600)),
                 ),
