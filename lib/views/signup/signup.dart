@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:client_mobile/helper/constant.dart';
 import 'package:client_mobile/helper/http_helper.dart';
+import 'package:client_mobile/views/NavigationDrawer/MynavDrawer.dart';
 import 'package:client_mobile/views/login/login.dart';
 import 'package:client_mobile/views/signup/signup_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -180,7 +181,7 @@ class _SignupState extends State<Signup> {
               Padding(padding: EdgeInsets.all(30.0),
                 child: GestureDetector(
                   onTap: (){
-                    //Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
                   },
                   child: Text.rich(
                     TextSpan(

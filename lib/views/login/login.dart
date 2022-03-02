@@ -5,8 +5,11 @@ import 'package:client_mobile/views/signup/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../helper/constant.dart';
+import '../NavigationDrawer/MynavDrawer.dart';
+import '../NavigationDrawer/navDrawer.dart';
 import 'login_model.dart';
 
 class Login extends StatefulWidget {
@@ -29,9 +32,12 @@ class _LoginState extends State<Login> {
     try{
       final response = await _http.postData(loginApi, _body);
       if (response.statusCode == 200){
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('username', username);
+
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Signup()),
+          MaterialPageRoute(builder: (context) => NavDrawer()),
         );
 
         Fluttertoast.showToast(

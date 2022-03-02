@@ -86,7 +86,8 @@ class CategoryPage extends StatelessWidget {
               children: <Widget>[
                 Image.asset(
                   data.img,
-                  width: 42,
+                  width: 54,
+
                 ),
                 SizedBox(
                   height: 14,
