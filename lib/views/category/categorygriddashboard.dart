@@ -3,8 +3,6 @@ import 'package:client_mobile/ep882_house_rental_app/ui/house_rental_home_page.d
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../signup/signup.dart';
-
 class CategoryPage extends StatelessWidget {
   late final List<String> value = ["Apartment", "Duplex", "Single Family Detached House", "Villa", "Tiny home", "Commercial Space"];
   //late String value;
@@ -27,18 +25,18 @@ class CategoryPage extends StatelessWidget {
   Items item4 = new Items(
     title: "Villa",
     subtitle: "Villa",
-    img: "assets/image/villa.jpg",
+    img: "assets/image/villa.png",
 
   );
   Items item5 = new Items(
     title: "Tiny Home",
     subtitle: "Tiny Home",
-    img: "assets/image/tiny.jpg",
+    img: "assets/image/tiny.png",
   );
   Items item6 = new Items(
     title: "Commercial Space",
     subtitle: "Commercial Space",
-    img: "assets/image/commercial.jpg",
+    img: "assets/image/commercial.png",
   );
 
   
@@ -51,11 +49,20 @@ class CategoryPage extends StatelessWidget {
     return Column(
       children: <Widget>[
         SizedBox(
-          height: 100,
+          height: 30,
+        ),
+        Padding(
+          padding: EdgeInsets.all(30),
+          child: Text(
+            'House Category',
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
         ),
         Expanded(child: GridView.count(
         childAspectRatio: 1.0,
-        padding: EdgeInsets.only(left: 16, right: 16),
+        padding: EdgeInsets.only(left: 16, right: 16,top: 10),
         crossAxisCount: 2,
         crossAxisSpacing: 18,
         mainAxisSpacing: 18,

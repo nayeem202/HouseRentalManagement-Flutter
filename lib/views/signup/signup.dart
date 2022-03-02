@@ -180,7 +180,7 @@ class _SignupState extends State<Signup> {
               Padding(padding: EdgeInsets.all(30.0),
                 child: GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
+                    //Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
                   },
                   child: Text.rich(
                     TextSpan(
