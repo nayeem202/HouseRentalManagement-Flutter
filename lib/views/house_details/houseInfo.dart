@@ -27,6 +27,11 @@ class HouseInfo extends StatefulWidget {
   final videoType;
   final lat;
   final lng;
+  final username;
+  final name;
+  final phone;
+  final email;
+
 
 
 
@@ -35,7 +40,7 @@ class HouseInfo extends StatefulWidget {
 
   //HouseInfo({Key? key, required int advertisingId, required String location, required String status, required String type, required int bedrooms, required int bathrooms, required int price, required int sqft, required String additionalinformation, required String images,required String imagesUri, required String img2, required String imgUri2, required String img3, required String imgUri3, required String video, required String videoType, required double lat, required double lng}) : super(key: key);
   const HouseInfo({
-    this.location, this.advertisingId, this.type, this.status, this.bedrooms, this.bathrooms, this.price, this.sqft, this.additionalinformation, this.images, this.imagesUri, this.img2, this.imgUri2, this.img3, this.imgUri3, this.video, this.videoType, this.lat, this.lng
+    this.location, this.name, this.username, this.phone, this.email, this.advertisingId, this.type, this.status, this.bedrooms, this.bathrooms, this.price, this.sqft, this.additionalinformation, this.images, this.imagesUri, this.img2, this.imgUri2, this.img3, this.imgUri3, this.video, this.videoType, this.lat, this.lng
 });
 
   @override
@@ -105,7 +110,7 @@ class _HouseInfoState extends State<HouseInfo> {
                           Text(
                             ("${widget.location}"),
                             style: TextStyle(
-                              fontSize: 28,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -113,17 +118,17 @@ class _HouseInfoState extends State<HouseInfo> {
                             height: 5,
                           ),
                           Text(
-                            '\$${"location"}',
+                            (" ৳ ${widget.price}"),
                             style: TextStyle(
                               fontSize: 15,
-                              color: black.withOpacity(0.4),
+                              color: Colors.green,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
                       ),
                       Text(
-                        "j",
+                        ("House Type - ${widget.type}"),
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -136,7 +141,7 @@ class _HouseInfoState extends State<HouseInfo> {
                   padding:
                   const EdgeInsets.only(left: appPadding, bottom: appPadding),
                   child: Text(
-                    'House information',
+                    ("Additional Information"),
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -166,10 +171,9 @@ class _HouseInfoState extends State<HouseInfo> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "1600 sqft",
-                                //widget.house.sqFeet.toString(),
+                                ("Sqft- ${widget.sqft}"),
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -177,7 +181,7 @@ class _HouseInfoState extends State<HouseInfo> {
                                 height: 10,
                               ),
                               Text(
-                                'Square foot',
+                                '',
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,
@@ -204,10 +208,10 @@ class _HouseInfoState extends State<HouseInfo> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "3 rooms ",
+                                ("Bedrooms - ${widget.bedrooms}"),
                                 //widget.house.bedRooms.toString(),
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -215,9 +219,9 @@ class _HouseInfoState extends State<HouseInfo> {
                                 height: 10,
                               ),
                               Text(
-                                'Bedrooms',
+                                '',
                                 style: TextStyle(
-                                  fontSize: 15,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -242,10 +246,10 @@ class _HouseInfoState extends State<HouseInfo> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "2 bathrooms",
+                                ("Bathrooms - ${widget.bathrooms}"),
                                 //widget.house.bathRooms.toString(),
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -253,7 +257,7 @@ class _HouseInfoState extends State<HouseInfo> {
                                 height: 10,
                               ),
                               Text(
-                                'Bathrooms',
+                                '',
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,
@@ -270,33 +274,15 @@ class _HouseInfoState extends State<HouseInfo> {
                         ),
                         child: Container(
                           width: 100,
-                          decoration: BoxDecoration(
-                              color: white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: black.withOpacity(0.4),
-                              )),
+
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                "5",
-                                //widget.house.garages.toString(),
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                'Garages',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
+
                             ],
                           ),
                         ),
@@ -311,7 +297,7 @@ class _HouseInfoState extends State<HouseInfo> {
                     bottom: appPadding * 4,
                   ),
                   child: Text(
-                    "description",
+                    ("Description - ${widget.additionalinformation}"),
                     //widget.house.description,
                     style: TextStyle(
                       color: black.withOpacity(0.4),

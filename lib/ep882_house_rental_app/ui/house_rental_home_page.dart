@@ -78,7 +78,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
     if (res.statusCode == 200) {
       List<dynamic> data = jsonDecode(res.body);
       advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
-      //print(advertise);
+      print(advertise);
       //this.advertise = data.map((e) => AdvertiseModel.fromMap(e));
       //showInSnackBar(data["message"]);
       setState(() {
@@ -268,7 +268,11 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                                           video : model.video,
                                           videoType : model.videoType,
                                           lat : model.lat,
-                                          lng : model.lng
+                                          lng : model.lng,
+                                          username :  model.user.username,
+                                          email : model.user.email,
+                                          name :  model.user.name,
+                                          phone : model.user.phone,
 
                                       ),
                                     ),

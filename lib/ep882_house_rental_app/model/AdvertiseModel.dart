@@ -1,3 +1,5 @@
+import 'package:client_mobile/ep882_house_rental_app/model/user.dart';
+
 class AdvertiseModel{
 
   late int advertisingId;
@@ -23,6 +25,7 @@ class AdvertiseModel{
 
   late double lat;
   late double lng;
+  late UserModel user;
 
 //<editor-fold desc="Data Methods">
 
@@ -46,6 +49,7 @@ class AdvertiseModel{
     required this.videoType,
     required this.lat,
     required this.lng,
+    required this.user,
   });
 
   @override
@@ -162,6 +166,8 @@ class AdvertiseModel{
       videoType: videoType ?? this.videoType,
       lat: lat ?? this.lat,
       lng: lng ?? this.lng,
+      user: user
+      //user: user ?? this.user,
     );
   }
 
@@ -210,6 +216,7 @@ class AdvertiseModel{
       videoType: map['videoType'] as String,
       lat: map['lat'] as double,
       lng: map['lng'] as double,
+      user: UserModel.fromMap(map['user'])
     );
   }
 
