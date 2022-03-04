@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../helper/constant.dart';
+import '../../views/house_details/houseInfo.dart';
 
 
 class HouseRentalHomePage extends StatefulWidget {
@@ -242,151 +243,183 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                             AdvertiseModel model = this.advertise[index];
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              3,
-                                          child: Stack(
-                                            children: [
-                                              Positioned(
-                                                left: 0,
-                                                right: 0,
-                                                top: 0,
-                                                bottom: 0,
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                    image: DecorationImage(
-                                                        image: NetworkImage(
-                                                            model.imagesUri),
-                                                        fit: BoxFit.cover),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => HouseInfo(
+                                          advertisingId : model.advertisingId,
+                                          location : model.location,
+                                          type : model.type,
+                                          status : model.status,
+                                          bedrooms : model.bedrooms,
+                                          bathrooms : model.bathrooms,
+                                          price : model.price,
+                                          sqft : model.sqft,
+                                          additionalinformation : model.additionalinformation,
+                                          images : model.images,
+                                          imagesUri : model.imagesUri,
+
+                                          img2 : model.img2,
+                                          imgUri2 : model.imgUri2,
+                                          img3 : model.img3,
+                                          imgUri3 : model.imgUri3,
+                                          video : model.video,
+                                          videoType : model.videoType,
+                                          lat : model.lat,
+                                          lng : model.lng
+
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                3,
+                                            child: Stack(
+                                              children: [
+                                                Positioned(
+                                                  left: 0,
+                                                  right: 0,
+                                                  top: 0,
+                                                  bottom: 0,
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      image: DecorationImage(
+                                                          image: NetworkImage(
+                                                              model.imagesUri),
+                                                          fit: BoxFit.cover),
+                                                    ),
                                                   ),
                                                 ),
+                                                Positioned(
+                                                    left: 16,
+                                                    right: 16,
+                                                    top: 16,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors.white,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(8),
+                                                          ),
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8),
+                                                          child: Row(
+                                                            children: [
+                                                              const Icon(
+                                                                  Icons.star,
+                                                                  color: Colors
+                                                                      .blue),
+                                                              const SizedBox(
+                                                                  width: 8),
+                                                              Text(model.type)
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors.white,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(8),
+                                                          ),
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8),
+                                                          child: Row(
+                                                            children: [
+                                                              Icon(Icons.favorite,
+                                                                  color: Colors
+                                                                      .blue[500]),
+                                                            ],
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ))
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "House No- " +
+                                                    model.advertisingId
+                                                        .toString(),
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold),
                                               ),
-                                              Positioned(
-                                                  left: 16,
-                                                  right: 16,
-                                                  top: 16,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8),
-                                                        child: Row(
-                                                          children: [
-                                                            const Icon(
-                                                                Icons.star,
-                                                                color: Colors
-                                                                    .blue),
-                                                            const SizedBox(
-                                                                width: 8),
-                                                            Text(model.type)
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8),
-                                                        child: Row(
-                                                          children: [
-                                                            Icon(Icons.favorite,
-                                                                color: Colors
-                                                                    .blue[500]),
-                                                          ],
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ))
+                                              Spacer(),
+                                              Text(
+                                                model.price.toString() + " ৳",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.blue,
+                                                    fontSize: 21),
+                                              ),
+                                              Text("/Month"),
                                             ],
                                           ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "House No- " +
-                                                  model.advertisingId
-                                                      .toString(),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Spacer(),
-                                            Text(
-                                              model.price.toString() + " ৳",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.blue,
-                                                  fontSize: 21),
-                                            ),
-                                            Text("/Month"),
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Icon(
-                                              Icons.location_on,
-                                              color: Colors.blue,
-                                            ),
-                                            Text(
-                                              model.location,
-                                              style: TextStyle(fontSize: 12),
-                                            ),
-                                            Icon(
-                                              Icons.bed,
-                                              color: Colors.blue,
-                                            ),
-                                            Text(
-                                              model.bedrooms.toString(),
-                                              style: TextStyle(fontSize: 12),
-                                            ),
-                                            Icon(
-                                              Icons.crop_square,
-                                              color: Colors.blue,
-                                            ),
-                                            Text(
-                                              model.sqft.toString() + " sqft",
-                                              style: TextStyle(fontSize: 12),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Icon(
+                                                Icons.location_on,
+                                                color: Colors.blue,
+                                              ),
+                                              Text(
+                                                model.location,
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                              Icon(
+                                                Icons.bed,
+                                                color: Colors.blue,
+                                              ),
+                                              Text(
+                                                model.bedrooms.toString(),
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                              Icon(
+                                                Icons.crop_square,
+                                                color: Colors.blue,
+                                              ),
+                                              Text(
+                                                model.sqft.toString() + " sqft",
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

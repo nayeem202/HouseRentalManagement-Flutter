@@ -1,6 +1,10 @@
 import 'package:client_mobile/ep882_house_rental_app/house_rental_app.dart';
 import 'package:client_mobile/ep882_house_rental_app/ui/house_rental_home_page.dart';
+import 'package:client_mobile/views/advertisingDetails/components/data.dart';
+import 'package:client_mobile/views/advertisingDetails/components/house.dart';
+import 'package:client_mobile/views/advertisingDetails/details_screen.dart';
 import 'package:client_mobile/views/category/categorygriddashboard.dart';
+import 'package:client_mobile/views/house_details/houseInfo.dart';
 import 'package:client_mobile/views/login/login.dart';
 //import 'package:client_mobile/views/login/login_page.dart';
 import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
@@ -9,6 +13,9 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
+  late final House house;
+  House house1 = houseList[0];
+  
   @override
   State createState() {
     return _MyApp();
@@ -72,6 +79,7 @@ class _MyApp extends State {
           _child = HouseRentalHomePage(value: '',);
           break;
         case 2:
+          //_child = HouseInfo();
           _child = Login();
           break;
       }
