@@ -1,6 +1,7 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:client_mobile/ep882_house_rental_app/model/AdvertiseModel.dart';
 import 'package:client_mobile/views/advertisingDetails/components/carousel_images.dart';
+import 'package:client_mobile/views/house_details/map.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
@@ -348,6 +349,25 @@ class _HouseInfoState extends State<HouseInfo> {
                             : Icons.play_arrow,
                       )),
                 ),
+                FlatButton(
+                  child: Text('LogIn', style: TextStyle(fontSize: 20.0),),
+                  color: Colors.blueAccent,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const HouseMap()));
+                  },
+                ),
+
+                // new FloatingActionButton(onPressed: () {
+               //    print("Hello");
+               //     Navigator.push(
+               //         context,
+               //         MaterialPageRoute(builder: (context) => const HouseMap()));
+               //  }
+               //  ),
+
               ],
             ))
           ],
