@@ -113,7 +113,7 @@ class _HouseInfoState extends State<HouseInfo> {
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                    bottom: appPadding,
+                    bottom: 10,
                     left: appPadding,
                     right: appPadding,
                   ),
@@ -123,13 +123,27 @@ class _HouseInfoState extends State<HouseInfo> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            ("${widget.location}"),
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                WidgetSpan(
+                                  child: Icon(Icons.location_on_outlined, size: 14),
+                                ),
+                                TextSpan(
+                                  text: (" ${widget.location}"),
+                                  style: TextStyle(color : Colors.black87, fontSize: 15, fontWeight: FontWeight.bold),
+
+                                ),
+                              ],
                             ),
                           ),
+                          // Text(
+                          //   ("${widget.location}"),
+                          //   style: TextStyle(
+                          //     fontSize: 16,
+                          //     fontWeight: FontWeight.bold,
+                          //   ),
+                          // ),
                           SizedBox(
                             height: 5,
                           ),
@@ -146,26 +160,68 @@ class _HouseInfoState extends State<HouseInfo> {
                       Text(
                         ("${widget.type}"),
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 13,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: appPadding, bottom: appPadding),
-                  child: Text(
-                    ("Additional Information"),
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: appPadding, bottom: 20),
+                        child: Text(
+                          ("Additional Information"),
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: 60.0, bottom: 20, right: 10
+                        ),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        HouseMap(lat: widget.lat, lng: widget.lng)));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.deepPurpleAccent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            elevation: 15.0,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(9.0),
+                            child: Text(
+                              'See location',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ]),
+
                 Container(
-                  height: 130,
+                  height: 100,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     physics: BouncingScrollPhysics(),
@@ -177,8 +233,18 @@ class _HouseInfoState extends State<HouseInfo> {
                         ),
                         child: Container(
                           width: 100,
+                          //height: 200,
                           decoration: BoxDecoration(
-                              color: white,
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 3,
+                                  blurRadius: 3,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
                                 color: black.withOpacity(0.4),
@@ -189,19 +255,12 @@ class _HouseInfoState extends State<HouseInfo> {
                               Text(
                                 ("Sqft- ${widget.sqft}"),
                                 style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87),
                               ),
                               SizedBox(
                                 height: 10,
-                              ),
-                              Text(
-                                '',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                ),
                               ),
                             ],
                           ),
@@ -215,6 +274,15 @@ class _HouseInfoState extends State<HouseInfo> {
                         child: Container(
                           width: 100,
                           decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 3,
+                                  blurRadius: 3,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
                               color: white,
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
@@ -227,19 +295,12 @@ class _HouseInfoState extends State<HouseInfo> {
                                 ("Bedrooms - ${widget.bedrooms}"),
                                 //widget.house.bedRooms.toString(),
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               SizedBox(
                                 height: 10,
-                              ),
-                              Text(
-                                '',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
                               ),
                             ],
                           ),
@@ -253,6 +314,15 @@ class _HouseInfoState extends State<HouseInfo> {
                         child: Container(
                           width: 100,
                           decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 3,
+                                  blurRadius: 3,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
                               color: white,
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
@@ -265,14 +335,13 @@ class _HouseInfoState extends State<HouseInfo> {
                                 ("Bathrooms - ${widget.bathrooms}"),
                                 //widget.house.bathRooms.toString(),
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-
                             ],
                           ),
                         ),
@@ -313,10 +382,8 @@ class _HouseInfoState extends State<HouseInfo> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(
-                    left: appPadding,
-                    bottom: appPadding
-                  ),
+                  padding:
+                      EdgeInsets.only(left: appPadding, bottom: appPadding),
                   child: Text(
                     'Virtual Tour',
                     style: TextStyle(
@@ -334,7 +401,9 @@ class _HouseInfoState extends State<HouseInfo> {
                       : Container(),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.only(
+                    bottom: 50, top: 20
+                  ),
                   child: FloatingActionButton(
                       onPressed: () {
                         setState(() {
@@ -349,24 +418,6 @@ class _HouseInfoState extends State<HouseInfo> {
                             : Icons.play_arrow,
                       )),
                 ),
-                FlatButton(
-                  child: Text('LogIn', style: TextStyle(fontSize: 20.0),),
-                  color: Colors.blueAccent,
-                  textColor: Colors.white,
-                  onPressed: () {
-                    Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const HouseMap()));
-                  },
-                ),
-
-                // new FloatingActionButton(onPressed: () {
-               //    print("Hello");
-               //     Navigator.push(
-               //         context,
-               //         MaterialPageRoute(builder: (context) => const HouseMap()));
-               //  }
-               //  ),
 
               ],
             ))

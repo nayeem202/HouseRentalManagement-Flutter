@@ -84,10 +84,17 @@ class CategoryPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.asset(
-                  data.img,
-                  width: 54,
 
+                Padding(
+
+                  padding: EdgeInsets.only(
+                    top: 10
+                  ),
+                  child: Image.asset(
+                    data.img,
+                    width: 54,
+
+                  ),
                 ),
                 SizedBox(
                   height: 14,
@@ -103,17 +110,8 @@ class CategoryPage extends StatelessWidget {
                 SizedBox(
                   height: 8,
                 ),
-                Text(
-                  data.subtitle,
-                  style: GoogleFonts.openSans(
-                      textStyle: TextStyle(
-                          color: Colors.white38,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600)),
-                ),
-                SizedBox(
-                  height: 14,
-                ),
+
+
 
                 TextButton(
                   onPressed: (){
