@@ -1,6 +1,7 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:client_mobile/ep882_house_rental_app/model/AdvertiseModel.dart';
 import 'package:client_mobile/views/advertisingDetails/components/carousel_images.dart';
+import 'package:client_mobile/views/house_details/bottom_buttons.dart';
 import 'package:client_mobile/views/house_details/map.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -137,13 +138,7 @@ class _HouseInfoState extends State<HouseInfo> {
                               ],
                             ),
                           ),
-                          // Text(
-                          //   ("${widget.location}"),
-                          //   style: TextStyle(
-                          //     fontSize: 16,
-                          //     fontWeight: FontWeight.bold,
-                          //   ),
-                          // ),
+
                           SizedBox(
                             height: 5,
                           ),
@@ -392,19 +387,25 @@ class _HouseInfoState extends State<HouseInfo> {
                     ),
                   ),
                 ),
-                Center(
-                  child: _controller.value.isInitialized
-                      ? AspectRatio(
-                          aspectRatio: _controller.value.aspectRatio,
-                          child: VideoPlayer(_controller),
-                        )
-                      : Container(),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 10, right: 10
+                  ),
+                  child: Center(
+                    child: _controller.value.isInitialized
+                        ? AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          )
+                        : Container(),
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    bottom: 50, top: 20
+                    top: 20, bottom: 20
                   ),
                   child: FloatingActionButton(
+                    backgroundColor: Colors.deepPurpleAccent,
                       onPressed: () {
                         setState(() {
                           _controller.value.isPlaying
@@ -418,7 +419,7 @@ class _HouseInfoState extends State<HouseInfo> {
                             : Icons.play_arrow,
                       )),
                 ),
-
+                    BottomButtons(),
               ],
             ))
           ],
