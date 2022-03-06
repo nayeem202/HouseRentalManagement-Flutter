@@ -420,9 +420,12 @@ class _HouseInfoState extends State<HouseInfo> {
                             : Icons.play_arrow,
                       )),
                 ),
-                    BottomButtons(),
+                    BottomButtons(name: widget.name, email: widget.email, phone: widget.phone
+
+                    ),
               ],
-            ))
+            )
+            )
           ],
         )
       ],
