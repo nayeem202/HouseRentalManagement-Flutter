@@ -81,6 +81,7 @@ class _HouseInfoState extends State<HouseInfo> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
         body: Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -426,5 +427,11 @@ class _HouseInfoState extends State<HouseInfo> {
         )
       ],
     ));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 }
