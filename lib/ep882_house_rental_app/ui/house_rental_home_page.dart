@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import '../../helper/constant.dart';
 import '../../views/house_details/houseInfo.dart';
+import 'filterSearch.dart';
 
 
 class HouseRentalHomePage extends StatefulWidget {
@@ -26,7 +27,7 @@ class HouseRentalHomePage extends StatefulWidget {
 class _HouseRentalHomePageState extends State<HouseRentalHomePage>
     with SingleTickerProviderStateMixin {
 
-
+  bool _show = true;
   late String value;
   _HouseRentalHomePageState(this.value);
   late TabController _tabController;
@@ -192,8 +193,20 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                                 width: 16,
                               ),
                               GestureDetector(
-                                onTap: () => Navigator.of(context)
-                                    .pushNamed("/search/filter"),
+
+                                onTap: () {
+                                  var sheetController = showBottomSheet(
+                                      context: context,
+                                      builder: (context) => BottomSheetWidget());
+
+                                  _showButton(false);
+
+                                  sheetController.closed.then((value) {
+                                    _showButton(true);
+                                  });
+                                },
+                                // onTap: () => Navigator.of(context)
+                                //     .pushNamed("/search/filter"),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: Colors.deepPurpleAccent,
@@ -448,31 +461,12 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
           ),
         ),
       ),
-      // bottomNavigationBar: WaterDropNavBar(
-      //   backgroundColor: Colors.white,
-      //   onItemSelected: (index) {
-      //     setState(() {
-      //       selectedIndex = index;
-      //     });
-      //     pageController.animateToPage(selectedIndex,
-      //         duration: const Duration(milliseconds: 400),
-      //         curve: Curves.easeOutQuad);
-      //   },
-      //   selectedIndex: selectedIndex,
-      //   barItems: [
-      //     BarItem(
-      //       filledIcon: Icons.bookmark_rounded,
-      //       outlinedIcon: Icons.bookmark_border_rounded,
-      //
-      //     ),
-      //     BarItem(
-      //         filledIcon: Icons.favorite_rounded,
-      //         outlinedIcon: Icons.favorite_border_rounded),
-      //
-      //
-      //   ],
-      //
-      // ),
+
     );
+  }
+  void _showButton(bool value) {
+    setState(() {
+      _show = value;
+    });
   }
 }
