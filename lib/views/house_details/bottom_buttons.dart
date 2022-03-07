@@ -38,7 +38,7 @@ class BottomButtons extends StatelessWidget {
       if (response.statusCode == 200){
         print(jsonEncode(map));
         Fluttertoast.showToast(
-            msg: "Sent Message Successfully",
+            msg: "Message Sent Successfully",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
@@ -105,6 +105,7 @@ class BottomButtons extends StatelessWidget {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
+                      //single child
                       return AlertDialog(
                         content: Form(
                             key: _formKey,
@@ -112,8 +113,10 @@ class BottomButtons extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(bottom: 0),
+
+                                  padding: EdgeInsets.only(bottom: 5),
                                   child: RichText(
+                                    textAlign: TextAlign.center,
                                     text: TextSpan(
                                       children: [
                                         WidgetSpan(
@@ -137,8 +140,9 @@ class BottomButtons extends StatelessWidget {
 
 
                                 Padding(
-                                  padding: EdgeInsets.only(bottom: 0),
+                                  padding: EdgeInsets.only(bottom: 5),
                                   child: RichText(
+                                    textAlign: TextAlign.center,
                                     text: TextSpan(
                                       children: [
                                         WidgetSpan(
