@@ -1,7 +1,6 @@
 // import 'package:flutter_notebook_14th_story/ep882_house_rental_app/model/house.dart';
 import 'dart:convert';
 import 'dart:core';
-import 'dart:core';
 import 'package:client_mobile/ep882_house_rental_app/model/AdvertiseModel.dart';
 import 'package:client_mobile/helper/http_helper.dart';
 import 'package:flutter/cupertino.dart';
@@ -79,7 +78,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
     if (res.statusCode == 200) {
       List<dynamic> data = jsonDecode(res.body);
       advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
-      print(advertise);
+     // print(advertise);
       //this.advertise = data.map((e) => AdvertiseModel.fromMap(e));
       //showInSnackBar(data["message"]);
       setState(() {

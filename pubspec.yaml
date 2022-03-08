@@ -50,6 +50,7 @@ dependencies:
   carousel_pro: ^1.0.0
   video_player: ^2.2.19
   google_maps_flutter: ^2.1.2
+  dropdown_formfield: ^0.1.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

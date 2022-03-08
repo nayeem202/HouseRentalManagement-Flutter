@@ -6,3 +6,4 @@ final String getAdvertisingBySearchApi = host+"/getAddvertisingBySearch/";
 final String getAdvertisingByCategory = host+"/getAddvertisingByType/";
 final String getUserinfo = host + "/getUserInfo/";
 final String sendMailUri = host + "/send_amail";
+final String filterSearch = host + "/getAdvancedSearching";

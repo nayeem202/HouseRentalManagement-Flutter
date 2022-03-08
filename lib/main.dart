@@ -15,7 +15,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatefulWidget {
   late final House house;
   House house1 = houseList[0];
-  
+
   @override
   State createState() {
     return _MyApp();
