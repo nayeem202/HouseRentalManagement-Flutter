@@ -117,17 +117,17 @@ class CategoryPage extends StatelessWidget {
                   onPressed: (){
                     if(data.title== "Apartment"){
                       print("Hello");
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(value: value[0])
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(value: value[0],)
                       ));
                     }
                     if(data.title== "Duplex"){
                       print("Hello");
                       print(value[0]);
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(value: value[1], )));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(value: value[1],  )));
                     }
                     if(data.title== "Single Family Detached House"){
                       print("Hello");
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(value: value[2])));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(value: value[2], )));
                     }
                     if(data.title== "Villa"){
                       print("Hello");
@@ -135,7 +135,7 @@ class CategoryPage extends StatelessWidget {
                     }
                     if(data.title == "Tiny Home"){
                       print("Hello");
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(value: value[4], )));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseRentalHomePage(value: value[4],)));
                     }
                     if(data.title== "Commercial Space"){
                       print("Hello");

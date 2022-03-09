@@ -10,14 +10,30 @@ import '../../helper/constant.dart';
 import '../../views/house_details/houseInfo.dart';
 import 'filterSearch.dart';
 
-
 class HouseRentalHomePage extends StatefulWidget {
+  final location;
+  final type;
+  final status;
+  final bedrooms;
+  final bathrooms;
+  final minprice;
+  final maxprice;
+  final minsqft;
+  final maxsqft;
 
   String value;
-  HouseRentalHomePage({required this.value});
+  HouseRentalHomePage(
+      {required this.value,
+      this.location,
+      this.type,
+      this.status,
+      this.bedrooms,
+      this.bathrooms,
+      this.minprice,
+      this.maxprice,
+      this.minsqft,
+      this.maxsqft});
   //const HouseRentalHomePage({Key? key}, this.value) : super(key: key);
-
-
 
   @override
   _HouseRentalHomePageState createState() => _HouseRentalHomePageState(value);
@@ -25,7 +41,6 @@ class HouseRentalHomePage extends StatefulWidget {
 
 class _HouseRentalHomePageState extends State<HouseRentalHomePage>
     with SingleTickerProviderStateMixin {
-
   bool _show = true;
   late String value;
   _HouseRentalHomePageState(this.value);
@@ -40,13 +55,13 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
 
   getAdvertisingBySearch() async {
     String search = _search.value.text;
-    final res = await _http
-        .getData(getAdvertisingBySearchApi + search);
+    final res = await _http.getData(getAdvertisingBySearchApi + search);
     if (res.statusCode == 200) {
       print(value.toString());
       List<dynamic> data = jsonDecode(res.body);
       advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
-      print(advertise);
+      //print(BottomSheetWidgetState);
+
       print(search);
       setState(() {
         this.advertise;
@@ -54,33 +69,56 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
     }
   }
 
-
   getAdvertisingBYCategory() async {
-
-    //String category = "Apartment";
-    final res = await _http
-        .getData(getAdvertisingByCategory+value);
+    final res = await _http.getData(getAdvertisingByCategory + value);
     if (res.statusCode == 200) {
       List<dynamic> data = jsonDecode(res.body);
       advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
-      //print(advertise);
       setState(() {
         this.advertise;
       });
     }
   }
 
-
-
   getAdvertising() async {
-    final res =
-        await _http.getData(getAllAdvertisingApi);
+    final res = await _http.getData(getAllAdvertisingApi);
     if (res.statusCode == 200) {
       List<dynamic> data = jsonDecode(res.body);
       advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
-     // print(advertise);
+      //print(this.location);
       //this.advertise = data.map((e) => AdvertiseModel.fromMap(e));
       //showInSnackBar(data["message"]);
+      setState(() {
+        this.advertise;
+      });
+    }
+  }
+
+  filterSearching() async {
+    print(widget.location);
+    final res = await _http.getData(filterSearch +
+        "/" +
+        widget.location +
+        "/" +
+        widget.minprice +
+        "/" +
+        widget.maxprice +
+        "/" +
+        widget.minsqft +
+        "/" +
+        widget.maxsqft +
+        "/" +
+        widget.type +
+        "/" +
+        widget.status +
+        "/" +
+        widget.bedrooms +
+        "/" +
+        widget.bathrooms);
+    if (res.statusCode == 200) {
+      List<dynamic> data = jsonDecode(res.body);
+      advertise = data.map((e) => AdvertiseModel.fromMap(e)).toList();
+      print(this.advertise);
       setState(() {
         this.advertise;
       });
@@ -97,21 +135,17 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
     // pageController = PageController(initialPage: selectedIndex);
     _tabController = TabController(length: 3, vsync: this);
 
-
-    // if(value != "" || value != null){
-    //   getAdvertisingBYCategory();
-    // }else if(v){
-    //
-    // }
-    // else{
-    //   getAdvertising();
-    // }
-
-    if( (value == "Apartment") || (value == "Duplex") ||  (value ==  "Single Family Detached House") || (value == "Villa") || (value == "Tiny home") || value == "Commercial Space"){
+    if ((value == "Apartment") ||
+        (value == "Duplex") ||
+        (value == "Single Family Detached House") ||
+        (value == "Villa") ||
+        (value == "Tiny home") ||
+        value == "Commercial Space") {
       getAdvertisingBYCategory();
-    }
-    else if (_search == null || _search == "") {
+    } else if (_search == null || _search == "") {
       getAdvertising();
+    } else if(widget.location != null){
+      filterSearching();
     }
     else {
       getAdvertising();
@@ -121,9 +155,12 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
     pageController = PageController(initialPage: selectedIndex);
   }
 
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       // appBar: AppBar(title: Text("House Rental Management"), centerTitle: true,),
       resizeToAvoidBottomInset: false,
 
@@ -167,8 +204,8 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                                   textInputAction: TextInputAction.search,
                                   controller: _search,
                                   decoration: InputDecoration(
-                                     // hintText: "Search", icon: Icon(Icons.search),
-                                    hintText: "Search",
+                                      // hintText: "Search", icon: Icon(Icons.search),
+                                      hintText: "Search",
                                       prefixIcon: IconButton(
                                         icon: Icon(Icons.search),
                                         onPressed: () {
@@ -192,15 +229,19 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                                 width: 16,
                               ),
                               GestureDetector(
-
                                 onTap: () {
-                                  var sheetController = showBottomSheet(
-                                      context: context,
-                                      builder: (context) => BottomSheetWidget());
+                                  print("hello");
+                                  var sheetController = scaffoldKey.currentState
+                                      ?.showBottomSheet(
+                                          (context) => BottomSheetWidget());
+                                  // var sheetController = showBottomSheet(
+                                  //     context: context,
+                                  //     builder: (context) =>
+                                  //         BottomSheetWidget());
 
                                   _showButton(false);
 
-                                  sheetController.closed.then((value) {
+                                  sheetController?.closed.then((value) {
                                     _showButton(true);
                                   });
                                 },
@@ -261,31 +302,30 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                                     context,
                                     MaterialPageRoute(
                                       builder: (_) => HouseInfo(
-                                          advertisingId : model.advertisingId,
-                                          location : model.location,
-                                          type : model.type,
-                                          status : model.status,
-                                          bedrooms : model.bedrooms,
-                                          bathrooms : model.bathrooms,
-                                          price : model.price,
-                                          sqft : model.sqft,
-                                          additionalinformation : model.additionalinformation,
-                                          images : model.images,
-                                          imagesUri : model.imagesUri,
-
-                                          img2 : model.img2,
-                                          imgUri2 : model.imgUri2,
-                                          img3 : model.img3,
-                                          imgUri3 : model.imgUri3,
-                                          video : model.video,
-                                          videoType : model.videoType,
-                                          lat : model.lat,
-                                          lng : model.lng,
-                                          username :  model.user.username,
-                                          email : model.user.email,
-                                          name :  model.user.name,
-                                          phone : model.user.phone,
-
+                                        advertisingId: model.advertisingId,
+                                        location: model.location,
+                                        type: model.type,
+                                        status: model.status,
+                                        bedrooms: model.bedrooms,
+                                        bathrooms: model.bathrooms,
+                                        price: model.price,
+                                        sqft: model.sqft,
+                                        additionalinformation:
+                                            model.additionalinformation,
+                                        images: model.images,
+                                        imagesUri: model.imagesUri,
+                                        img2: model.img2,
+                                        imgUri2: model.imgUri2,
+                                        img3: model.img3,
+                                        imgUri3: model.imgUri3,
+                                        video: model.video,
+                                        videoType: model.videoType,
+                                        lat: model.lat,
+                                        lng: model.lng,
+                                        username: model.user.username,
+                                        email: model.user.email,
+                                        name: model.user.name,
+                                        phone: model.user.phone,
                                       ),
                                     ),
                                   );
@@ -336,7 +376,8 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                                                             color: Colors.white,
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(8),
+                                                                    .circular(
+                                                                        8),
                                                           ),
                                                           padding:
                                                               const EdgeInsets
@@ -359,16 +400,20 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                                                             color: Colors.white,
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(8),
+                                                                    .circular(
+                                                                        8),
                                                           ),
                                                           padding:
                                                               const EdgeInsets
                                                                   .all(8),
                                                           child: Row(
                                                             children: [
-                                                              Icon(Icons.favorite,
+                                                              Icon(
+                                                                  Icons
+                                                                      .favorite,
                                                                   color: Colors
-                                                                      .blue[500]),
+                                                                          .blue[
+                                                                      500]),
                                                             ],
                                                           ),
                                                         )
@@ -387,7 +432,8 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                                                     model.advertisingId
                                                         .toString(),
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.bold),
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                               Spacer(),
                                               Text(
@@ -460,9 +506,9 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
           ),
         ),
       ),
-
     );
   }
+
   void _showButton(bool value) {
     setState(() {
       _show = value;
