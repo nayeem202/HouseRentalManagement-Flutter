@@ -1,4 +1,5 @@
 class SignupModel{
+  late int id;
   late String name;
   late String username;
   late String email;
@@ -14,6 +15,16 @@ class SignupModel{
     required this.phone,
     required this.password,
   });
+
+  SignupModel.all({
+    required this.id,
+    required this.name,
+    required this.username,
+    required this.email,
+    required this.phone,
+    required this.password,
+  });
+
 
   @override
   bool operator ==(Object other) =>
@@ -82,7 +93,8 @@ class SignupModel{
   }
 
   factory SignupModel.fromMap(Map<String, dynamic> map) {
-    return SignupModel(
+    return SignupModel.all(
+      id: map['id'] as int,
       name: map['name'] as String,
       username: map['username'] as String,
       email: map['email'] as String,
@@ -90,6 +102,8 @@ class SignupModel{
       password: map['password'] as String,
     );
   }
+
+
 
 //</editor-fold>
 }

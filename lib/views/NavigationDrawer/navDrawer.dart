@@ -13,7 +13,7 @@ class NavDrawer extends StatefulWidget {
 }
 
 class _NavDrawerState extends State<NavDrawer> {
-  String username = "";
+  String name = "";
   final _http = new HttpHelper();
   late Future<LoginModel> userInfo;
 
@@ -37,38 +37,13 @@ class _NavDrawerState extends State<NavDrawer> {
     }
   }
 
-  // Future<LoginModel> getUserInfo() async {
-  //   final response = await _http.getData(getUserinfo + username);
-  //   if (response.statusCode == 200) {
-  //     // If the server did return a 200 OK response,
-  //     // then parse the JSON.
-  //     return LoginModel.fromMap(jsonDecode(response.body));
-  //   } else {
-  //     // If the server did not return a 200 OK response,
-  //     // then throw an exception.
-  //     throw Exception('Failed to load album');
-  //   }
-  // }
-
-  // getUserInfo() async {
-  //
-  //   final res = await _http.getData(getUserinfo + username);
-  //   if (res.statusCode == 200) {
-  //     List<dynamic> data = jsonDecode(res.body);
-  //     userInfo = data.map((e) => AdvertiseModel.fromMap(e)).toList();
-  //
-  //     setState(() {
-  //       this.userInfo;
-  //     });
-  //   }
-  // }
-
-
 
   getLocalData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      username = prefs.getString('username')!;
+      name = prefs.getString('name')!;
+      print(name);
+
     });
   }
 
@@ -82,7 +57,7 @@ class _NavDrawerState extends State<NavDrawer> {
            Center(
              child: Padding(
                padding: EdgeInsets.all(16.0),
-               child: Text(" Welcome Mr " + username , textAlign: TextAlign.center,
+               child: Text(" Welcome Mr " + name , textAlign: TextAlign.center,
                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87,fontSize: 20.0),),
              ),
            )
