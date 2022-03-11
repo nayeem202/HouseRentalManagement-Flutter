@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../helper/constant.dart';
 import '../NavigationDrawer/navDrawer.dart';
+import '../profile/profile_screen.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -45,7 +46,7 @@ class _LoginState extends State<Login> {
 
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => NavDrawer()),
+          MaterialPageRoute(builder: (context) => ProfileScreen()),
         );
 
         Fluttertoast.showToast(
@@ -95,12 +96,12 @@ class _LoginState extends State<Login> {
                 width: width,
                 height: height * 0.45,
                 child: Image.asset(
-                  'assets/image/signin.jpg',
+                  'assets/image/signin.png',
                   fit: BoxFit.fill,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(left: 8, right: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -115,27 +116,33 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: 30.0,
               ),
-              TextField(
-                controller: _username,
-                decoration: InputDecoration(
-                  hintText: 'Username',
-                  suffixIcon: Icon(Icons.person),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
+              Padding(
+                padding: EdgeInsets.only(left: 16, right: 16),
+                child: TextField(
+                  controller: _username,
+                  decoration: InputDecoration(
+                    hintText: 'Username',
+                    suffixIcon: Icon(Icons.person),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                   ),
                 ),
               ),
               SizedBox(
                 height: 20.0,
               ),
-              TextField(
-                controller: _password,
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                  suffixIcon: Icon(Icons.visibility_off),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
+              Padding(
+                padding: EdgeInsets.only(left: 16, right: 16),
+                child: TextField(
+                  controller: _password,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    suffixIcon: Icon(Icons.visibility_off),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                   ),
                 ),
               ),
@@ -143,9 +150,9 @@ class _LoginState extends State<Login> {
                 height: 30.0,
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.only(top: 4, left: 16, right: 26),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     RaisedButton(
                       child: Text('Login'),

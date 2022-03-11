@@ -90,7 +90,7 @@ class _SignupState extends State<Signup> {
               Container(
                 width: width,
                 height: height*0.45,
-                child: Image.asset('assets/image/signup.jpg',fit: BoxFit.fill,),
+                child: Image.asset('assets/image/signup.png',fit: BoxFit.fill,),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
