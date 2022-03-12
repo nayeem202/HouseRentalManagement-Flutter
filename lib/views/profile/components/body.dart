@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../advertising/advertisingForm.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 
@@ -54,7 +55,7 @@ class _BodyState extends State<Body> {
                       Icons.account_circle,
                       color: Colors.deepPurpleAccent,
                     ),
-                    Text(" " + name, style: ,),
+                    Text(" " + name,),
                   ],
                 ),
               ),
@@ -139,7 +140,13 @@ class _BodyState extends State<Body> {
             child: ProfileMenu(
               text: "Advertise Now",
               icon: "assets/icons/Settings.svg",
-              press: () {},
+              press: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                    builder: (_) => AdvertisingForm()));
+
+              },
             ),
           ),
 

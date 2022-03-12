@@ -51,6 +51,8 @@ dependencies:
   video_player: ^2.2.19
   google_maps_flutter: ^2.1.2
   dropdown_formfield: ^0.1.4
+  image_picker: ^0.8.4+11
+
 
 dev_dependencies:
   flutter_test:
@@ -90,7 +92,7 @@ flutter:
      - assets/image/villa.png
      - assets/image/pp.jpg
      - assets/icons/
-     - assets/image/Profile Image.png
+     - assets/image/Profile Image.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
