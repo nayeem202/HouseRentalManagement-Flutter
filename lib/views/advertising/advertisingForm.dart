@@ -1,8 +1,16 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'package:client_mobile/helper/constant.dart';
+import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../helper/http_helper.dart';
 
 class AdvertisingForm extends StatefulWidget {
   @override
@@ -19,20 +27,111 @@ class AdvertisingFormState extends State<AdvertisingForm> {
   late String type;
   late String location;
   late String status;
+  var image;
+  final _http = HttpHelper();
+  late String userId;
 
-  late File image;
+
+  final TextEditingController _bedrooms = TextEditingController();
+  final TextEditingController _bathrooms = TextEditingController();
+  final TextEditingController _sqft = TextEditingController();
+  final TextEditingController _rentprice = TextEditingController();
+  final TextEditingController _additionalInformation = TextEditingController();
+  final TextEditingController _lat = TextEditingController();
+  final TextEditingController _lng = TextEditingController();
+
+
+
+
   final picker = ImagePicker();
 
   @override
   void initState() {
     super.initState();
+    getLocalData();
     type = "";
     location = "";
     status = "";
-
-
-
   }
+
+  final uri = SaveAdvertising;
+
+  getLocalData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userId = prefs.getString('id')!;
+    });
+  }
+
+
+
+  saveAd() async{
+    // var fileContent = image.readAsBytesSync();
+    // var fileContentBase64 = base64.encode(fileContent);
+
+    var map = new Map<String, dynamic>();
+    map['bedrooms'] = _bedrooms.value.text;
+    map['bathrooms'] = _bathrooms.value.text;
+    map['location'] = location;
+    map['type'] = type;
+    map['status'] = status;
+    map['price'] = _rentprice.value.text;
+    map['sqft'] = _sqft.value.text;
+    map['file'] = image.toString();
+    map['user_id'] = userId;
+
+
+
+
+    print(map);
+    //String _body = model.toJson();
+    try{
+      http.Response response = await http.post(
+       Uri.parse(uri),
+        body: map,
+      );
+
+      if (response.statusCode == 200){
+        Fluttertoast.showToast(
+            msg: "Advertise successFully published",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
+      }
+      else{
+        Fluttertoast.showToast(
+            msg: "Registration Failed",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
+      }
+
+
+
+    }catch(e){
+      log(e.toString());
+      Fluttertoast.showToast(
+          msg: "$e",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+  }
+
+
+
 
 
   Future getImageFile() async {
@@ -46,7 +145,6 @@ class AdvertisingFormState extends State<AdvertisingForm> {
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -192,6 +290,7 @@ class AdvertisingFormState extends State<AdvertisingForm> {
                                 Container(
                                   padding: EdgeInsets.only(left: 20, top: 25),
                                   child: TextFormField(
+                                    controller: _bedrooms,
                                     decoration: const InputDecoration(
                                       //icon: const Icon(Icons.phone),
                                       hintText: 'Bedrooms',
@@ -210,6 +309,7 @@ class AdvertisingFormState extends State<AdvertisingForm> {
                                 Container(
                                   padding: EdgeInsets.only(left: 16, top: 25),
                                   child: TextFormField(
+                                    controller: _bathrooms,
                                     decoration: const InputDecoration(
                                       //icon: const Icon(Icons.phone),
                                       hintText: 'Bathrooms',
@@ -232,6 +332,7 @@ class AdvertisingFormState extends State<AdvertisingForm> {
                                 Container(
                                   padding: EdgeInsets.only(left: 20, top: 25),
                                   child: TextFormField(
+                                    controller: _sqft,
                                     decoration: const InputDecoration(
                                       //icon: const Icon(Icons.phone),
                                       hintText: 'Sqft',
@@ -250,6 +351,7 @@ class AdvertisingFormState extends State<AdvertisingForm> {
                                 Container(
                                   padding: EdgeInsets.only(left: 16, top: 25),
                                   child: TextFormField(
+                                    controller: _rentprice,
                                     decoration: const InputDecoration(
                                       //icon: const Icon(Icons.phone),
                                       hintText: 'Rent Price',
@@ -319,6 +421,7 @@ class AdvertisingFormState extends State<AdvertisingForm> {
                                 Container(
                                   padding: EdgeInsets.only(left: 20, top: 25),
                                   child: TextFormField(
+                                    controller: _lat,
                                     decoration: const InputDecoration(
                                       //icon: const Icon(Icons.phone),
                                       hintText: 'Latitude',
@@ -337,6 +440,8 @@ class AdvertisingFormState extends State<AdvertisingForm> {
                                 Container(
                                   padding: EdgeInsets.only(left: 16, top: 25),
                                   child: TextFormField(
+                                    controller: _lng,
+
                                     decoration: const InputDecoration(
                                       //icon: const Icon(Icons.phone),
                                       hintText: 'Longitude',
@@ -359,16 +464,16 @@ class AdvertisingFormState extends State<AdvertisingForm> {
                                 if(image != null)
                                   Image.file(image)
                                 else
-                                  Text("Click on Pick Image to select an Image", style: TextStyle(fontSize: 18.0),),
-                                RaisedButton(
-                                  onPressed: () {
-                                    getImageFile();
-                                    // or
-                                    // _pickImageFromCamera();
-                                    // use the variables accordingly
-                                  },
-                                  child: Text("Pick Image From Gallery"),
-                                ),
+                                  Text("select an Image",),
+                                Container(
+                                  padding: EdgeInsets.only(left: 16, top: 25),
+                                  child: RaisedButton(
+                                    onPressed: () {
+                                      getImageFile();
+                                    },
+                                    child: Text("Pick Image From Gallery"),
+                                  ),
+                                )
                               ],
                             ),
                           ),
@@ -401,7 +506,11 @@ class AdvertisingFormState extends State<AdvertisingForm> {
                               left: 150.0, top: 40.0, bottom: 20),
                           child: new RaisedButton(
                             child: const Text('Submit'),
-                            onPressed: null,
+                            onPressed: () => {
+                              saveAd(),
+                              print( this._bedrooms.value.text)
+
+                            },
                           )),
                     ],
                   ),
