@@ -51,6 +51,8 @@ dependencies:
   google_maps_flutter: ^2.1.2
   dropdown_formfield: ^0.1.4
   image_picker: ^0.8.4+11
+  dio: ^4.0.4
+  mime: ^1.0.1
 
 
 dev_dependencies:

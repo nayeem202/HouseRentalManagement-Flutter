@@ -1,3 +1,4 @@
+import 'package:client_mobile/views/advertising/newAdvertiseForm.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -98,7 +99,13 @@ class _BodyState extends State<Body> {
             child: ProfileMenu(
               text: "My Account",
               icon: "assets/icons/User Icon.svg",
-              press: () => {},
+                press: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => newAdvertisingForm()));
+
+                },
             ),
           ),
           Container(
@@ -119,7 +126,9 @@ class _BodyState extends State<Body> {
             child: ProfileMenu(
               text: "My Advertisement",
               icon: "assets/icons/Bell.svg",
-              press: () {},
+              press: () {
+
+              },
             ),
           ),
           Container(
