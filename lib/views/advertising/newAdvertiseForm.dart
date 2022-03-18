@@ -99,8 +99,8 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
     imageUploadRequest.fields['bedrooms'] = _bedrooms.value.text;
     imageUploadRequest.fields['sqft'] = _sqft.value.text;
     imageUploadRequest.fields['price'] = _rentprice.value.text;
-    imageUploadRequest.fields['lat'] = double.parse(_lat.value.text) as String;
-    imageUploadRequest.fields['lng'] = double.parse(_lng.value.text) as String;
+    imageUploadRequest.fields['lat'] = _lat.value.text;
+    imageUploadRequest.fields['lng'] = _lng.value.text;
     imageUploadRequest.fields['additionalInformation'] = _additionalInformation.value.text;
     imageUploadRequest.fields['user_id'] = userId;
 
@@ -111,13 +111,39 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
       final streamedResponse = await imageUploadRequest.send();
       final response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode != 200) {
+        final snackBar = SnackBar(
+            content: const Text('Advertise Successfully Published'),
+            action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () {
+                // Some code to undo the change.
+              },
+            ));
         return null;
       }
       final Map<String, dynamic> responseData = json.decode(response.body);
-      //_resetState();
+      final snackBar = SnackBar(
+          content: const Text('Advertise failed to publish'),
+          action: SnackBarAction(
+            label: 'Undo',
+            onPressed: () {
+              // Some code to undo the change.
+            },
+          ));
+
+
       return responseData;
     } catch (e) {
       print(e);
+      final snackBar = SnackBar(
+          content: const Text('Yay'),
+          action: SnackBarAction(
+            label: 'Undo',
+            onPressed: () {
+              // Some code to undo the change.
+            },
+          ));
+
       return null;
     }
   }
@@ -135,9 +161,19 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
       if (response == null) {
         // pr.hide();
         //messageAllert('User details updated successfully', 'Success');
+
       }
     } else {
       //messageAllert('Please Select a profile photo', 'Profile Photo');
+      final snackBar = SnackBar(
+          content: const Text('Yay! A SnackBar!'),
+          action: SnackBarAction(
+            label: 'Undo',
+            onPressed: () {
+              // Some code to undo the change.
+            },
+          ));
+
     }
   }
 
@@ -253,7 +289,9 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                                 Container(
                                   padding: EdgeInsets.only(left: 16, top: 25),
                                   child: DropDownFormField(
+
                                     hintText: 'Select Location',
+
                                     value: location,
                                     // onSaved: (value) {
                                     //   setState(() {
@@ -381,7 +419,7 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                       Row(
                         children: [
                           SizedBox(
-                            width: MediaQuery.of(context).size.width / 2.3,
+                            width: MediaQuery.of(context).size.width / 1.2,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -471,6 +509,31 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                       Row(
                         children: [
                           SizedBox(
+                            width: MediaQuery.of(context).size.width / 1.2,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.only(left: 16, top: 25),
+                                  child: TextFormField(
+                                    //keyboardType: TextInputType.multiline,
+                                    maxLines: 3,
+                                    controller: _additionalInformation,
+                                    decoration: const InputDecoration(
+                                      //icon: const Icon(Icons.phone),
+                                      hintText: 'Additional Information',
+                                      //labelText: 'Longitude',
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(
                             width: MediaQuery.of(context).size.width / 2.3,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -478,9 +541,12 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                                 if(image != null)
                                   Image.file(image)
                                 else
-                                  Text("select an Image",),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 16, top: 8),
+                                    child: Text("select an Image",),
+                                  ),
                                 Container(
-                                  padding: EdgeInsets.only(left: 16, top: 25),
+                                  padding: EdgeInsets.only(left: 16, top: 25, bottom: 8),
                                   child: RaisedButton(
                                     onPressed: () {
                                       getImageFile();
@@ -519,11 +585,11 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                           padding: const EdgeInsets.only(
                               left: 150.0, top: 40.0, bottom: 20),
                           child: new RaisedButton(
-                            child: const Text('Submit'),
+                            child: const Text('Publish'),
                             onPressed: () => {
                               _startUploading(),
                               //saveAd(),
-                              print(image)
+                              print(_lat.value.text)
 
                             },
                           )),
