@@ -19,8 +19,6 @@ class _BodyState extends State<Body> {
   late String name;
   late String email;
 
-
-
   @override
   void initState(){
     getLocalData();
@@ -128,6 +126,10 @@ class _BodyState extends State<Body> {
               icon: "assets/icons/Bell.svg",
               press: () {
 
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (_) => UploadPage(url: '', key: key,)));
               },
             ),
           ),

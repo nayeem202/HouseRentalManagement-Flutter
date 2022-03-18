@@ -88,22 +88,24 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
     // Intilize the multipart request
     final imageUploadRequest = http.MultipartRequest('POST', apiUrl);
 
-    // Attach the file in the request
     final file = await http.MultipartFile.fromPath(
-        'half_body_image', image.path,
+        'file', image.path,
         contentType: MediaType(mimeTypeData![0], mimeTypeData[1]));
-    // Explicitly pass the extension of the image with request body
-    // Since image_picker has some bugs due which it mixes up
-    // image extension with file name like this filenamejpge
-    // Which creates some problem at the server side to manage
-    // or verify the file extension
-
-//    imageUploadRequest.fields['ext'] = mimeTypeData[1];
-
     imageUploadRequest.files.add(file);
     imageUploadRequest.fields['location'] = location;
     imageUploadRequest.fields['type'] = type;
     imageUploadRequest.fields['status'] = status;
+    imageUploadRequest.fields['bathrooms'] = _bathrooms.value.text;
+    imageUploadRequest.fields['bedrooms'] = _bedrooms.value.text;
+    imageUploadRequest.fields['sqft'] = _sqft.value.text;
+    imageUploadRequest.fields['price'] = _rentprice.value.text;
+    imageUploadRequest.fields['lat'] = double.parse(_lat.value.text) as String;
+    imageUploadRequest.fields['lng'] = double.parse(_lng.value.text) as String;
+    imageUploadRequest.fields['additionalInformation'] = _additionalInformation.value.text;
+    imageUploadRequest.fields['user_id'] = userId;
+
+
+
 
     try {
       final streamedResponse = await imageUploadRequest.send();
@@ -521,7 +523,7 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                             onPressed: () => {
                               _startUploading(),
                               //saveAd(),
-                              print( this._bedrooms.value.text)
+                              print(image)
 
                             },
                           )),
