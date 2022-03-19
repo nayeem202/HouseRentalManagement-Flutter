@@ -20,17 +20,15 @@ class newAdvertisingForm extends StatefulWidget {
   }
 }
 
-// Create a corresponding State class. This class holds data related to the form.
 class newAdvertisingFormState extends State<newAdvertisingForm> {
   Dio dio = new Dio();
-
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
   final _formKey = GlobalKey<FormState>();
   late String type;
   late String location;
   late String status;
-  late File image;
+  var image;
+  var image1;
+  var image2;
   final _http = HttpHelper();
   late String userId;
 
@@ -47,11 +45,15 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
 
 
   final picker = ImagePicker();
+  final picker1 = ImagePicker();
+  final picker2 = ImagePicker();
+
 
   @override
   void initState() {
     super.initState();
-    getImageFile();
+    //getImageFile();
+
 
     // image == null
     //     ? NetworkImage(
@@ -62,6 +64,7 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
     type = "";
     location = "";
     status = "";
+
   }
 
   final uri = SaveAdvertising;
@@ -77,7 +80,7 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
   Uri apiUrl = Uri.parse(
       SaveAdvertising);
 
-  Future<Map<String, dynamic>?> _uploadImage(File image) async {
+  Future<Map<String, dynamic>?> _uploadImage(File image, File image1, File image2) async {
     setState(() {
       //pr.show();
     });
@@ -91,7 +94,15 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
     final file = await http.MultipartFile.fromPath(
         'file', image.path,
         contentType: MediaType(mimeTypeData![0], mimeTypeData[1]));
+    // final file1 = await http.MultipartFile.fromPath(
+    //     'files', image1.path,
+    //     contentType: MediaType(mimeTypeData![0], mimeTypeData[1]));
+
+
     imageUploadRequest.files.add(file);
+    //imageUploadRequest.files.add(file1);
+    //imageUploadRequest.files.add(file2);
+
     imageUploadRequest.fields['location'] = location;
     imageUploadRequest.fields['type'] = type;
     imageUploadRequest.fields['status'] = status;
@@ -155,7 +166,7 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
         _bedrooms != '' ||
         _bathrooms != '' ||
         status != '') {
-      final Map<String, dynamic>? response = await _uploadImage(image);
+      final Map<String, dynamic>? response = await _uploadImage(image, image1, image2);
 
       // Check if any error occured
       if (response == null) {
@@ -193,6 +204,32 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
       }
     });
   }
+
+  Future getImageFile1() async {
+    final pickedFile1 = await picker1.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile1 != null) {
+        image1 = File(pickedFile1.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future getImageFile2() async {
+    final pickedFile2 = await picker2.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile2 != null) {
+        image2 = File(pickedFile2.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -534,7 +571,7 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                       Row(
                         children: [
                           SizedBox(
-                            width: MediaQuery.of(context).size.width / 2.3,
+                            width: MediaQuery.of(context).size.width / 3.3,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -542,43 +579,83 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                                   Image.file(image)
                                 else
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 16, top: 8),
-                                    child: Text("select an Image",),
+                                    padding: const EdgeInsets.only(left: 16, top: 16),
+                                    child: Icon(
+                                        Icons.camera_alt,
+                                        size: 50,
+                                        color:Colors.green
+                                    ),
                                   ),
                                 Container(
                                   padding: EdgeInsets.only(left: 16, top: 25, bottom: 8),
                                   child: RaisedButton(
                                     onPressed: () {
                                       getImageFile();
+                                      getImageFile1();
+
                                     },
-                                    child: Text("Pick Image From Gallery"),
+                                    child: Text("Choose Image"),
                                   ),
                                 )
                               ],
                             ),
                           ),
-                          // SizedBox(
-                          //   width:
-                          //   MediaQuery.of(context).size.width / 2.3,
-                          //   child: Column(
-                          //     mainAxisAlignment: MainAxisAlignment.start,
-                          //     children: [
-                          //       Container(
-                          //         padding:
-                          //         EdgeInsets.only(left: 16, top: 25),
-                          //         child:   TextFormField(
-                          //           decoration: const InputDecoration(
-                          //             //icon: const Icon(Icons.phone),
-                          //             hintText: 'Longitude',
-                          //             labelText: 'Longitude',
-                          //           ),
-                          //         ),
-                          //       )
-                          //
-                          //     ],
-                          //   ),
-                          //
-                          // )
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 3.3,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                if(image1 != null)
+                                  Image.file(image1)
+                                else
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 16, top: 16),
+                                    child: Icon(
+                                        Icons.camera_alt,
+                                        size: 50,
+                                        color:Colors.green
+                                    ),
+                                  ),
+                                Container(
+                                  padding: EdgeInsets.only(left: 16, top: 25, bottom: 8),
+                                  child: RaisedButton(
+                                    onPressed: () {
+                                      getImageFile1();
+                                    },
+                                    child: Text("Choose Image"),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 3.3,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                if(image2 != null)
+                                  Image.file(image2)
+                                else
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 16, top: 16),
+                                    child: Icon(
+                                        Icons.camera_alt,
+                                        size: 50,
+                                        color:Colors.green
+                                    ),
+                                  ),
+                                Container(
+                                  padding: EdgeInsets.only(left: 16, top: 25, bottom: 8),
+                                  child: RaisedButton(
+                                    onPressed: () {
+                                      getImageFile2();
+                                    },
+                                    child: Text("Choose Image"),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                       new Container(
@@ -589,8 +666,8 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                             onPressed: () => {
                               _startUploading(),
                               //saveAd(),
+                              print(image),
                               print(_lat.value.text)
-
                             },
                           )),
                     ],
