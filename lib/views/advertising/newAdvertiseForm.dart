@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:video_player/video_player.dart';
 import '../../helper/http_helper.dart';
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
@@ -23,12 +24,16 @@ class newAdvertisingForm extends StatefulWidget {
 class newAdvertisingFormState extends State<newAdvertisingForm> {
   Dio dio = new Dio();
   final _formKey = GlobalKey<FormState>();
+  late VideoPlayerController _videoPlayerController;
+
   late String type;
   late String location;
   late String status;
   var image;
   var image1;
   var image2;
+  var video;
+
   final _http = HttpHelper();
   late String userId;
 
@@ -47,6 +52,7 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
   final picker = ImagePicker();
   final picker1 = ImagePicker();
   final picker2 = ImagePicker();
+  final videoPick  = ImagePicker();
 
 
   @override
@@ -78,7 +84,7 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
 
 
   Uri apiUrl = Uri.parse(
-      SaveAdvertising);
+      SaveAdvertisingWithFile);
 
   Future<Map<String, dynamic>?> _uploadImage(File image, File image1, File image2) async {
     setState(() {
@@ -87,21 +93,36 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
 
     final mimeTypeData =
     lookupMimeType(image.path, headerBytes: [0xFF, 0xD8])?.split('/');
+    final mimeTypeData1 =
+    lookupMimeType(image1.path, headerBytes: [0xFF, 0xD8])?.split('/');
+    final mimeTypeData2 =
+    lookupMimeType(image2.path, headerBytes: [0xFF, 0xD8])?.split('/');
 
     // Intilize the multipart request
     final imageUploadRequest = http.MultipartRequest('POST', apiUrl);
 
     final file = await http.MultipartFile.fromPath(
-        'file', image.path,
+        'files', image.path,
         contentType: MediaType(mimeTypeData![0], mimeTypeData[1]));
-    // final file1 = await http.MultipartFile.fromPath(
-    //     'files', image1.path,
-    //     contentType: MediaType(mimeTypeData![0], mimeTypeData[1]));
+
+    final file1 = await http.MultipartFile.fromPath(
+        'files', image1.path,
+        contentType: MediaType(mimeTypeData1![0], mimeTypeData1[1]));
+
+     final file2 = await http.MultipartFile.fromPath(
+         'files', image2.path,
+        contentType: MediaType(mimeTypeData2![0], mimeTypeData2[1]));
+
+
+    final fileVideo = await http.MultipartFile.fromPath(
+        'file', video.path,
+        contentType: MediaType(mimeTypeData2[0], mimeTypeData2[1]));
 
 
     imageUploadRequest.files.add(file);
-    //imageUploadRequest.files.add(file1);
-    //imageUploadRequest.files.add(file2);
+    imageUploadRequest.files.add(file1);
+    imageUploadRequest.files.add(file2);
+    imageUploadRequest.files.add(fileVideo);
 
     imageUploadRequest.fields['location'] = location;
     imageUploadRequest.fields['type'] = type;
@@ -112,7 +133,7 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
     imageUploadRequest.fields['price'] = _rentprice.value.text;
     imageUploadRequest.fields['lat'] = _lat.value.text;
     imageUploadRequest.fields['lng'] = _lng.value.text;
-    imageUploadRequest.fields['additionalInformation'] = _additionalInformation.value.text;
+    imageUploadRequest.fields['additionalinformation'] = _additionalInformation.value.text;
     imageUploadRequest.fields['user_id'] = userId;
 
 
@@ -122,6 +143,7 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
       final streamedResponse = await imageUploadRequest.send();
       final response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode != 200) {
+        print(_additionalInformation.value.text);
         final snackBar = SnackBar(
             content: const Text('Advertise Successfully Published'),
             action: SnackBarAction(
@@ -228,6 +250,24 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
     });
   }
 
+
+  Future getVideoFile() async {
+    final pickedVideo = await videoPick.getVideo(source: ImageSource.gallery);
+
+      if (pickedVideo != null) {
+        video = File(pickedVideo.path);
+        _videoPlayerController = VideoPlayerController.file(video)..initialize().then((_) {
+          setState(() { });
+          _videoPlayerController.play();
+        });
+      } else {
+        print('No image selected.');
+      }
+
+
+
+
+  }
 
 
 
@@ -591,7 +631,7 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                                   child: RaisedButton(
                                     onPressed: () {
                                       getImageFile();
-                                      getImageFile1();
+
 
                                     },
                                     child: Text("Choose Image"),
@@ -658,17 +698,73 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                           ),
                         ],
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 3.3,
+                            child: Column(
+
+
+
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                if (video != null)
+                                  _videoPlayerController.value.isInitialized
+                                      ? AspectRatio(
+                                    aspectRatio: _videoPlayerController.value.aspectRatio,
+                                    child: VideoPlayer(_videoPlayerController),
+                                  )
+                                      : Container()
+                                  else
+                                  Padding(
+
+                                    padding: const EdgeInsets.only( top: 16,),
+                                    child: Icon(
+                                        Icons.video_collection,
+                                        size: 50,
+                                        color:Colors.green
+                                    ),
+                                  ),
+                                Container(
+
+                                  padding: EdgeInsets.only( top: 25, bottom: 8),
+                                  child: RaisedButton(
+                                    onPressed: () {
+                                      getVideoFile();
+                                    },
+                                    child: Text("Choose Video"),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+
+
+                        ],
+                      ),
+
+
                       new Container(
+                        alignment: Alignment.center,
                           padding: const EdgeInsets.only(
-                              left: 150.0, top: 40.0, bottom: 20),
-                          child: new RaisedButton(
-                            child: const Text('Publish'),
-                            onPressed: () => {
-                              _startUploading(),
-                              //saveAd(),
-                              print(image),
-                              print(_lat.value.text)
-                            },
+                              left: 50.0, top: 6.0, bottom: 20, right: 50),
+                          child: SizedBox(
+                            width: 200,
+                            child: new RaisedButton(
+                              hoverColor: Colors.deepPurple,
+
+                              child: const Text('Publish'),
+                              onPressed: () => {
+                                _startUploading(),
+                                //saveAd(),
+                                print(image),
+                                print(image1),
+                                print(image2),
+
+                                print(_lat.value.text)
+                              },
+                            ),
                           )),
                     ],
                   ),
