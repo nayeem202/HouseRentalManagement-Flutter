@@ -13,7 +13,6 @@ import '../../helper/http_helper.dart';
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
 
-
 class newAdvertisingForm extends StatefulWidget {
   @override
   newAdvertisingFormState createState() {
@@ -37,7 +36,6 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
   final _http = HttpHelper();
   late String userId;
 
-
   final TextEditingController _bedrooms = TextEditingController();
   final TextEditingController _bathrooms = TextEditingController();
   final TextEditingController _sqft = TextEditingController();
@@ -46,20 +44,15 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
   final TextEditingController _lat = TextEditingController();
   final TextEditingController _lng = TextEditingController();
 
-
-
-
   final picker = ImagePicker();
   final picker1 = ImagePicker();
   final picker2 = ImagePicker();
-  final videoPick  = ImagePicker();
-
+  final videoPick = ImagePicker();
 
   @override
   void initState() {
     super.initState();
     //getImageFile();
-
 
     // image == null
     //     ? NetworkImage(
@@ -70,7 +63,6 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
     type = "";
     location = "";
     status = "";
-
   }
 
   final uri = SaveAdvertising;
@@ -82,42 +74,35 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
     });
   }
 
+  Uri apiUrl = Uri.parse(SaveAdvertisingWithFile);
 
-  Uri apiUrl = Uri.parse(
-      SaveAdvertisingWithFile);
-
-  Future<Map<String, dynamic>?> _uploadImage(File image, File image1, File image2) async {
+  Future<Map<String, dynamic>?> _uploadImage(
+      File image, File image1, File image2) async {
     setState(() {
       //pr.show();
     });
 
     final mimeTypeData =
-    lookupMimeType(image.path, headerBytes: [0xFF, 0xD8])?.split('/');
+        lookupMimeType(image.path, headerBytes: [0xFF, 0xD8])?.split('/');
     final mimeTypeData1 =
-    lookupMimeType(image1.path, headerBytes: [0xFF, 0xD8])?.split('/');
+        lookupMimeType(image1.path, headerBytes: [0xFF, 0xD8])?.split('/');
     final mimeTypeData2 =
-    lookupMimeType(image2.path, headerBytes: [0xFF, 0xD8])?.split('/');
+        lookupMimeType(image2.path, headerBytes: [0xFF, 0xD8])?.split('/');
 
     // Intilize the multipart request
     final imageUploadRequest = http.MultipartRequest('POST', apiUrl);
 
-    final file = await http.MultipartFile.fromPath(
-        'files', image.path,
+    final file = await http.MultipartFile.fromPath('files', image.path,
         contentType: MediaType(mimeTypeData![0], mimeTypeData[1]));
 
-    final file1 = await http.MultipartFile.fromPath(
-        'files', image1.path,
+    final file1 = await http.MultipartFile.fromPath('files', image1.path,
         contentType: MediaType(mimeTypeData1![0], mimeTypeData1[1]));
 
-     final file2 = await http.MultipartFile.fromPath(
-         'files', image2.path,
+    final file2 = await http.MultipartFile.fromPath('files', image2.path,
         contentType: MediaType(mimeTypeData2![0], mimeTypeData2[1]));
 
-
-    final fileVideo = await http.MultipartFile.fromPath(
-        'file', video.path,
+    final fileVideo = await http.MultipartFile.fromPath('file', video.path,
         contentType: MediaType(mimeTypeData2[0], mimeTypeData2[1]));
-
 
     imageUploadRequest.files.add(file);
     imageUploadRequest.files.add(file1);
@@ -133,11 +118,9 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
     imageUploadRequest.fields['price'] = _rentprice.value.text;
     imageUploadRequest.fields['lat'] = _lat.value.text;
     imageUploadRequest.fields['lng'] = _lng.value.text;
-    imageUploadRequest.fields['additionalinformation'] = _additionalInformation.value.text;
+    imageUploadRequest.fields['additionalinformation'] =
+        _additionalInformation.value.text;
     imageUploadRequest.fields['user_id'] = userId;
-
-
-
 
     try {
       final streamedResponse = await imageUploadRequest.send();
@@ -164,7 +147,6 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
             },
           ));
 
-
       return responseData;
     } catch (e) {
       print(e);
@@ -188,7 +170,8 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
         _bedrooms != '' ||
         _bathrooms != '' ||
         status != '') {
-      final Map<String, dynamic>? response = await _uploadImage(image, image1, image2);
+      final Map<String, dynamic>? response =
+          await _uploadImage(image, image1, image2);
 
       // Check if any error occured
       if (response == null) {
@@ -206,14 +189,8 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
               // Some code to undo the change.
             },
           ));
-
     }
   }
-
-
-
-
-
 
   Future getImageFile() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -250,26 +227,20 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
     });
   }
 
-
   Future getVideoFile() async {
     final pickedVideo = await videoPick.getVideo(source: ImageSource.gallery);
 
-      if (pickedVideo != null) {
-        video = File(pickedVideo.path);
-        _videoPlayerController = VideoPlayerController.file(video)..initialize().then((_) {
-          setState(() { });
+    if (pickedVideo != null) {
+      video = File(pickedVideo.path);
+      _videoPlayerController = VideoPlayerController.file(video)
+        ..initialize().then((_) {
+          setState(() {});
           _videoPlayerController.play();
         });
-      } else {
-        print('No image selected.');
-      }
-
-
-
-
+    } else {
+      print('No image selected.');
+    }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -284,7 +255,6 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
               Form(
                 key: _formKey,
                 child: Container(
-
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
@@ -293,7 +263,6 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                             blurRadius: 10, color: Colors.grey, spreadRadius: 5)
                       ]),
                   child: Column(
-
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Row(
@@ -331,7 +300,7 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                                       },
                                       {
                                         "display":
-                                        "Single Family Detached House",
+                                            "Single Family Detached House",
                                         "value": "Single Family Detached House",
                                       },
                                       {
@@ -366,7 +335,6 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                                 Container(
                                   padding: EdgeInsets.only(left: 16, top: 25),
                                   child: DropDownFormField(
-
                                     hintText: 'Select Location',
 
                                     value: location,
@@ -570,7 +538,6 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                                   padding: EdgeInsets.only(left: 16, top: 25),
                                   child: TextFormField(
                                     controller: _lng,
-
                                     decoration: const InputDecoration(
                                       //icon: const Icon(Icons.phone),
                                       hintText: 'Longitude',
@@ -615,24 +582,21 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                if(image != null)
+                                if (image != null)
                                   Image.file(image)
                                 else
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 16, top: 16),
-                                    child: Icon(
-                                        Icons.camera_alt,
-                                        size: 50,
-                                        color:Colors.green
-                                    ),
+                                    padding: const EdgeInsets.only(
+                                        left: 16, top: 16),
+                                    child: Icon(Icons.camera_alt,
+                                        size: 50, color: Colors.green),
                                   ),
                                 Container(
-                                  padding: EdgeInsets.only(left: 16, top: 25, bottom: 8),
+                                  padding: EdgeInsets.only(
+                                      left: 16, top: 25, bottom: 8),
                                   child: RaisedButton(
                                     onPressed: () {
                                       getImageFile();
-
-
                                     },
                                     child: Text("Choose Image"),
                                   ),
@@ -645,19 +609,18 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                if(image1 != null)
+                                if (image1 != null)
                                   Image.file(image1)
                                 else
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 16, top: 16),
-                                    child: Icon(
-                                        Icons.camera_alt,
-                                        size: 50,
-                                        color:Colors.green
-                                    ),
+                                    padding: const EdgeInsets.only(
+                                        left: 16, top: 16),
+                                    child: Icon(Icons.camera_alt,
+                                        size: 50, color: Colors.green),
                                   ),
                                 Container(
-                                  padding: EdgeInsets.only(left: 16, top: 25, bottom: 8),
+                                  padding: EdgeInsets.only(
+                                      left: 16, top: 25, bottom: 8),
                                   child: RaisedButton(
                                     onPressed: () {
                                       getImageFile1();
@@ -673,19 +636,18 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                if(image2 != null)
+                                if (image2 != null)
                                   Image.file(image2)
                                 else
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 16, top: 16),
-                                    child: Icon(
-                                        Icons.camera_alt,
-                                        size: 50,
-                                        color:Colors.green
-                                    ),
+                                    padding: const EdgeInsets.only(
+                                        left: 16, top: 16),
+                                    child: Icon(Icons.camera_alt,
+                                        size: 50, color: Colors.green),
                                   ),
                                 Container(
-                                  padding: EdgeInsets.only(left: 16, top: 25, bottom: 8),
+                                  padding: EdgeInsets.only(
+                                      left: 16, top: 25, bottom: 8),
                                   child: RaisedButton(
                                     onPressed: () {
                                       getImageFile2();
@@ -704,31 +666,27 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width / 3.3,
                             child: Column(
-
-
-
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 if (video != null)
                                   _videoPlayerController.value.isInitialized
                                       ? AspectRatio(
-                                    aspectRatio: _videoPlayerController.value.aspectRatio,
-                                    child: VideoPlayer(_videoPlayerController),
-                                  )
+                                          aspectRatio: _videoPlayerController
+                                              .value.aspectRatio,
+                                          child: VideoPlayer(
+                                              _videoPlayerController),
+                                        )
                                       : Container()
-                                  else
+                                else
                                   Padding(
-
-                                    padding: const EdgeInsets.only( top: 16,),
-                                    child: Icon(
-                                        Icons.video_collection,
-                                        size: 50,
-                                        color:Colors.green
+                                    padding: const EdgeInsets.only(
+                                      top: 16,
                                     ),
+                                    child: Icon(Icons.video_collection,
+                                        size: 50, color: Colors.green),
                                   ),
                                 Container(
-
-                                  padding: EdgeInsets.only( top: 25, bottom: 8),
+                                  padding: EdgeInsets.only(top: 25, bottom: 8),
                                   child: RaisedButton(
                                     onPressed: () {
                                       getVideoFile();
@@ -739,21 +697,16 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
                               ],
                             ),
                           ),
-
-
                         ],
                       ),
-
-
                       new Container(
-                        alignment: Alignment.center,
+                          alignment: Alignment.center,
                           padding: const EdgeInsets.only(
                               left: 50.0, top: 6.0, bottom: 20, right: 50),
                           child: SizedBox(
                             width: 200,
                             child: new RaisedButton(
                               hoverColor: Colors.deepPurple,
-
                               child: const Text('Publish'),
                               onPressed: () => {
                                 _startUploading(),
