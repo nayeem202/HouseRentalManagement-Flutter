@@ -5,7 +5,6 @@ import 'package:client_mobile/ep882_house_rental_app/model/AdvertiseModel.dart';
 import 'package:client_mobile/helper/http_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../helper/constant.dart';
 import '../../views/house_details/houseInfo.dart';
 import 'filterSearch.dart';
@@ -311,7 +310,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                                         price: model.price,
                                         sqft: model.sqft,
                                         additionalinformation:
-                                            model.additionalinformation,
+                                        model.additionalinformation,
                                         images: model.images,
                                         imagesUri: model.imagesUri,
                                         img2: model.img2,

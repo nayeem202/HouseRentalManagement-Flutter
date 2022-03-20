@@ -24,7 +24,6 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
   Dio dio = new Dio();
   final _formKey = GlobalKey<FormState>();
   late VideoPlayerController _videoPlayerController;
-
   late String type;
   late String location;
   late String status;
@@ -126,26 +125,28 @@ class newAdvertisingFormState extends State<newAdvertisingForm> {
       final streamedResponse = await imageUploadRequest.send();
       final response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode != 200) {
-        print(_additionalInformation.value.text);
-        final snackBar = SnackBar(
-            content: const Text('Advertise Successfully Published'),
-            action: SnackBarAction(
-              label: 'Undo',
-              onPressed: () {
-                // Some code to undo the change.
-              },
-            ));
+
+        Fluttertoast.showToast(
+            msg: "Advertise Successfully published",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
         return null;
       }
       final Map<String, dynamic> responseData = json.decode(response.body);
-      final snackBar = SnackBar(
-          content: const Text('Advertise failed to publish'),
-          action: SnackBarAction(
-            label: 'Undo',
-            onPressed: () {
-              // Some code to undo the change.
-            },
-          ));
+      Fluttertoast.showToast(
+          msg: "Advertise failed to published",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
 
       return responseData;
     } catch (e) {

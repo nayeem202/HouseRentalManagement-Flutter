@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../advertising/advertisingForm.dart';
+import '../../advertising/myAdvertising.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 
@@ -126,10 +127,10 @@ class _BodyState extends State<Body> {
               icon: "assets/icons/Bell.svg",
               press: () {
 
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (_) => UploadPage(url: '', key: key,)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MyAdvertising()));
               },
             ),
           ),
@@ -155,7 +156,7 @@ class _BodyState extends State<Body> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                    builder: (_) => AdvertisingForm()));
+                    builder: (_) => newAdvertisingForm()));
 
               },
             ),
