@@ -87,6 +87,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
       //print(this.location);
       //this.advertise = data.map((e) => AdvertiseModel.fromMap(e));
       //showInSnackBar(data["message"]);
+
       setState(() {
         this.advertise;
       });
@@ -129,6 +130,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
 
   @override
   void initState() {
+
     // TODO: implement initState
     super.initState(); //fetchAlbum();
     // pageController = PageController(initialPage: selectedIndex);
@@ -355,7 +357,8 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                                                               8),
                                                       image: DecorationImage(
                                                           image: NetworkImage(
-                                                              model.imagesUri),
+                                                              model.imagesUri.replaceAll("http://localhost:9092", host)),
+
                                                           fit: BoxFit.cover),
                                                     ),
                                                   ),
@@ -443,6 +446,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                                                     fontSize: 21),
                                               ),
                                               Text("/Month"),
+
                                             ],
                                           ),
                                         ),
@@ -473,7 +477,7 @@ class _HouseRentalHomePageState extends State<HouseRentalHomePage>
                                                 color: Colors.blue,
                                               ),
                                               Text(
-                                                model.sqft.toString() + " sqft",
+                                                model.sqft.toString() + "sqft",
                                                 style: TextStyle(fontSize: 12),
                                               ),
                                             ],
