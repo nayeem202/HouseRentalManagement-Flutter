@@ -71,7 +71,9 @@ class _HouseInfoState extends State<HouseInfo> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network("${widget.video.replaceAll("http://localhost:9092", host)}")
+    _controller = VideoPlayerController.network(
+       //widget.imagesUri.toString().replaceAll("http://localhost:9092", host)
+        "${widget.video.toString().replaceAll("http://localhost:9092", host)}")
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
@@ -97,13 +99,16 @@ class _HouseInfoState extends State<HouseInfo> {
                   autoplay: true,
                   images: [
                     NetworkImage(
-                      "${widget.imagesUri.replaceAll("http://localhost:9092", host)}",
+                      widget.imagesUri.toString().replaceAll("http://localhost:9092", host),
+                      //widget.imagesUri.replaceAll("http://localhost:9092", host)}",
                     ),
                     NetworkImage(
-                      "${widget.imgUri2.replaceAll("http://localhost:9092", host)}",
+                      widget.imgUri2.toString().replaceAll("http://localhost:9092", host),
+                     //"${widget.imgUri2.replaceAll("http://localhost:9092", host)}",
                     ),
                     NetworkImage(
-                      "${widget.imgUri3.replaceAll("http://localhost:9092", host)}",
+                      widget.imgUri3.toString().replaceAll("http://localhost:9092", host),
+                      //"${widget.imgUri3.replaceAll("http://localhost:9092", host)}",
                     ),
                   ],
                 ),
