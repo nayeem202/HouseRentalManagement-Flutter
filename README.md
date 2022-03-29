@@ -6,6 +6,8 @@ A new Flutter project.
 
 ## Backend : https://github.com/nayeem202/HouseRentalManagement-SpringBoot 
 
+## Presntation : https://docs.google.com/presentation/d/1QQwbP19_KBVSn0wrybR4vf1iCM7UB_WC/edit?usp=sharing&ouid=103863506165117887220&rtpof=true&sd=true
+
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
